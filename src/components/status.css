@@ -1,0 +1,72 @@
+.status-panel {
+  border: 1px solid var(--line-strong);
+  padding: clamp(22px, 3vw, 34px);
+  background: rgba(18, 16, 13, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: min(420px, 100%);
+}
+
+.uptime {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.uptime-label,
+.uptime-note {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.uptime-clock {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+.meta-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 12px;
+}
+
+.meta-row span {
+  color: var(--faint);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.meta-row strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.route-strip {
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.route-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+}

@@ -1,0 +1,152 @@
+.home-contrib {
+  padding-block: clamp(48px, 7vw, 96px) clamp(72px, 10vw, 140px);
+}
+
+.contrib-panel {
+  border: 1px solid var(--line-strong);
+  background: rgba(18, 16, 13, 0.6);
+  padding: clamp(22px, 3vw, 36px);
+}
+
+.contrib-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.contrib-kicker {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contrib-kicker .tick {
+  color: var(--red);
+}
+
+.contrib-kicker a {
+  color: var(--red);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.contrib-kicker a:hover {
+  border-color: var(--red);
+}
+
+.contrib-stats {
+  display: flex;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.contrib-stats div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.contrib-stats strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--ink);
+}
+
+.contrib-stats span {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contrib-scroll {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.contrib-inner {
+  width: max-content;
+  min-width: 100%;
+}
+
+.contrib-months {
+  position: relative;
+  height: 16px;
+  margin-bottom: 6px;
+}
+
+.contrib-months span {
+  position: absolute;
+  top: 0;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.contrib-grid {
+  display: flex;
+  gap: 3px;
+}
+
+.contrib-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contrib-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contrib-cell:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(232, 56, 42, 0.5);
+}
+
+.contrib-cell.empty {
+  visibility: hidden;
+}
+
+.contrib-loading,
+.contrib-error {
+  margin: 0;
+  padding: 26px 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.contrib-error a {
+  color: var(--red);
+}
+
+.contrib-legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 18px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.contrib-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.contrib-legend em {
+  margin-left: auto;
+  font-style: normal;
+}

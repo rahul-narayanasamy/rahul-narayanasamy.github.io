@@ -1,0 +1,75 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(0, 0, 0, 0.22) 3px,
+    rgba(0, 0, 0, 0.22) 4px
+  );
+  animation: crt-flicker 4s infinite;
+}
+
+@keyframes crt-flicker {
+  0%, 91%, 94%, 100% { opacity: 1; }
+  92% { opacity: 0.72; }
+  93% { opacity: 0.9; }
+}
+
+.loader-log {
+  width: min(680px, 100%);
+}
+
+.log-line {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.log-line.dim {
+  color: var(--muted);
+}
+
+.loader-count {
+  margin: 34px 0 18px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(16px, 2.6vw, 24px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.count-num {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.loader-bar {
+  height: 2px;
+  background: var(--line);
+}
+
+.loader-bar span {
+  display: block;
+  height: 100%;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red);
+  transition: width 0.1s linear;
+}
+

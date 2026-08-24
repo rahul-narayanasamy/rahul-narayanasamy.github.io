@@ -1,0 +1,109 @@
+.contact {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 110%, rgba(232, 56, 42, 0.14), transparent 65%),
+    radial-gradient(ellipse 40% 35% at 50% -10%, rgba(232, 56, 42, 0.07), transparent 60%);
+  pointer-events: none;
+}
+
+.contact .shell {
+  position: relative;
+}
+
+.contact-kicker {
+  margin: 0 0 20px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.contact-title {
+  margin: 0 0 22px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(30px, 7vw, 84px);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.contact-sub {
+  max-width: 54ch;
+  margin: 0 auto 44px;
+  font-size: clamp(13px, 1.5vw, 15px);
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.contact-cta {
+  display: inline-block;
+  padding: clamp(16px, 2.6vw, 24px) clamp(24px, 4vw, 44px);
+  border: 2px solid var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(15px, 2.6vw, 28px);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.contact-cta:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #0a0908;
+  transform: translateY(-4px);
+}
+
+.contact-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.socials {
+  list-style: none;
+  margin: clamp(56px, 8vw, 96px) auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 48px);
+}
+
+.socials a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 4px;
+  border-top: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.socials a:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.socials a:first-line {
+  font-weight: 700;
+}
+
+.socials a span {
+  font-size: 11px;
+  color: var(--muted);
+}

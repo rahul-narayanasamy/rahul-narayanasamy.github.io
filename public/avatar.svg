@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Anime avatar">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#241d17"/>
+      <stop offset="100%" stop-color="#120f0d"/>
+    </radialGradient>
+    <linearGradient id="hairSheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#343344"/>
+      <stop offset="100%" stop-color="#201f29"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="200" height="200" fill="url(#bgGlow)"/>
+
+  <!-- body / hoodie -->
+  <rect x="87" y="128" width="26" height="26" rx="8" fill="#e2b184"/>
+  <path d="M38 204 C38 163 65 145 100 145 C135 145 162 163 162 204 Z" fill="#332b45"/>
+  <path d="M83 147 L100 168 L117 147 L113 142 L87 142 Z" fill="#221c30"/>
+
+  <!-- head -->
+  <path d="M56 92 C56 55 74 37 100 37 C126 37 144 55 144 92 C144 123 122 149 100 149 C78 149 56 123 56 92 Z" fill="#f2c79f"/>
+
+  <!-- hair: back cap -->
+  <path d="M50 102 C43 40 76 21 100 21 C124 21 157 40 150 102 C147 96 145 92 144 86 C148 58 129 45 124 51 C129 37 111 33 106 43 C102 31 89 31 86 42 C80 32 64 39 69 52 C63 47 53 61 56 86 C55 92 53 96 50 102 Z" fill="url(#hairSheen)"/>
+
+  <!-- hair: spiky bangs -->
+  <path d="M57 80 L67 100 L73 71 L83 98 L91 66 L100 96 L109 65 L118 96 L127 68 L134 98 L143 78 C147 52 127 38 100 38 C73 38 53 54 57 80 Z" fill="#262531"/>
+
+  <!-- hair highlight -->
+  <path d="M68 46 C78 35 95 31 105 33 C92 38 79 45 73 56 Z" fill="#3f3e52" opacity="0.9"/>
+
+  <!-- eyebrows -->
+  <path d="M69 87 C75 82.5 85 82.5 90.5 85.5" stroke="#1b1a22" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M131 87 C125 82.5 115 82.5 109.5 85.5" stroke="#1b1a22" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- eyes -->
+  <path d="M69 99 C74.5 91 88 90.5 92.5 99.5" stroke="#191821" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M131 99 C125.5 91 112 90.5 107.5 99.5" stroke="#191821" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="80.5" cy="103" rx="7.5" ry="8.5" fill="#3d3b52"/>
+  <ellipse cx="119.5" cy="103" rx="7.5" ry="8.5" fill="#3d3b52"/>
+  <ellipse cx="80.5" cy="104" rx="3.6" ry="4.4" fill="#141320"/>
+  <ellipse cx="119.5" cy="104" rx="3.6" ry="4.4" fill="#141320"/>
+  <circle cx="77.8" cy="99.4" r="2.3" fill="#ffffff" opacity="0.95"/>
+  <circle cx="116.8" cy="99.4" r="2.3" fill="#ffffff" opacity="0.95"/>
+  <circle cx="83.2" cy="107.6" r="1.2" fill="#ffffff" opacity="0.55"/>
+  <circle cx="122.2" cy="107.6" r="1.2" fill="#ffffff" opacity="0.55"/>
+
+  <!-- blush -->
+  <ellipse cx="69" cy="115" rx="7" ry="3.8" fill="#ef9a8a" opacity="0.35"/>
+  <ellipse cx="131" cy="115" rx="7" ry="3.8" fill="#ef9a8a" opacity="0.35"/>
+
+  <!-- nose -->
+  <path d="M99 108 q3.5 3.5 0 7" stroke="#d9a97e" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+  <!-- mouth -->
+  <path d="M92.5 122 q7.5 6.5 15 0" stroke="#a85f43" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+</svg>

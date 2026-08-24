@@ -1,0 +1,45 @@
+.tech-strip {
+  overflow: hidden;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  padding-block: 20px;
+  user-select: none;
+}
+
+.tech-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 36s linear infinite;
+}
+
+.tech-strip:hover .tech-track {
+  animation-play-state: paused;
+}
+
+.tech-set {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.tech-tile {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 64px;
+  margin-right: 14px;
+  border: 1px solid var(--line);
+  background: rgba(18, 16, 13, 0.5);
+  filter: grayscale(0.85);
+  opacity: 0.75;
+  transition: filter 0.25s ease, opacity 0.25s ease,
+    border-color 0.25s ease, transform 0.25s ease;
+}
+
+.tech-tile:hover {
+  filter: none;
+  opacity: 1;
+  border-color: var(--red);
+  transform: translateY(-4px);
+}

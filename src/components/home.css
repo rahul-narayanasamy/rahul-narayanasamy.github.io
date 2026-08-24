@@ -1,0 +1,248 @@
+.home-role {
+  padding-block: clamp(48px, 7vw, 96px) clamp(64px, 9vw, 128px);
+}
+
+.role-card {
+  border: 1px solid var(--line-strong);
+  background: rgba(18, 16, 13, 0.6);
+  padding: clamp(24px, 4vw, 44px);
+}
+
+.role-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.role-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.role-org {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.role-summary {
+  max-width: 72ch;
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+.role-stack,
+.xp-stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.role-stack li,
+.xp-stack li {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.role-more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.role-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 34px;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.role-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: translateY(101%);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.role-link:hover {
+  border-color: var(--red);
+  color: #0a0908;
+}
+
+.role-link:hover::before {
+  transform: translateY(0);
+}
+
+.role-link span {
+  position: relative;
+}
+
+.role-link-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 13px;
+  letter-spacing: 0;
+  transition: transform 0.3s ease;
+}
+
+.role-link:hover .role-link-arrow {
+  transform: rotate(-45deg);
+}
+
+.home-status {
+  padding-block: clamp(48px, 7vw, 96px);
+}
+
+.home-status-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-index {
+  padding-top: 0;
+}
+
+.dir-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+}
+
+.dir-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--line-strong);
+  background: rgba(18, 16, 13, 0.6);
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.dir-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dir-card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(232, 56, 42, 0.14);
+}
+
+.dir-card:hover::after {
+  transform: scaleX(1);
+}
+
+.dir-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dir-num {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--red);
+}
+
+.dir-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 15px;
+  color: var(--muted);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.3s ease,
+    border-color 0.25s ease;
+}
+
+.dir-card:hover .dir-arrow {
+  background: var(--red);
+  border-color: var(--red);
+  color: #0a0908;
+  transform: rotate(-45deg);
+}
+
+.dir-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.dir-desc {
+  max-width: 46ch;
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .dir-grid {
+    grid-template-columns: 1fr;
+  }
+}
