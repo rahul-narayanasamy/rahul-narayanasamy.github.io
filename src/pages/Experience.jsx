@@ -11,7 +11,7 @@ export default function Experience() {
     <section className="sec" ref={rootRef}>
       <div className="shell">
         <header className="sec-head" data-reveal>
-          <span className="sec-index">05</span>
+          <span className="sec-index">04</span>
           <div>
             <p className="sec-kicker">
               <span className="tick">[</span> Career history{' '}

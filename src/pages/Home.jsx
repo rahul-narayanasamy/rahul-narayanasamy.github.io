@@ -30,15 +30,21 @@ const DIRECTORY = [
   },
   {
     index: '04',
-    label: 'Contact',
-    desc: 'rahulkishore227@gmail.com · Open to conversations',
-    href: '/contact',
-  },
-  {
-    index: '05',
     label: 'Experience',
     desc: 'EPAM Systems & Syncfusion — the full career timeline.',
     href: '/experience',
+  },
+  {
+    index: '05',
+    label: 'Blog',
+    desc: 'Notes on AI agents, frontend craft, and lessons learned.',
+    href: '/blog',
+  },
+  {
+    index: '06',
+    label: 'Contact',
+    desc: 'rahulkishore227@gmail.com · Open to conversations',
+    href: '/contact',
   },
 ]
 

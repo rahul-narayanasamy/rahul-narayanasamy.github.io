@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Experience from './pages/Experience'
+import Blog from './pages/Blog'
 
 const ROUTES = {
   '/': 'RAHUL NARAYANASAMY — Software Engineer',
@@ -15,6 +16,7 @@ const ROUTES = {
   '/projects': 'Projects — Rahul Narayanasamy',
   '/skills': 'Skills — Rahul Narayanasamy',
   '/experience': 'Experience — Rahul Narayanasamy',
+  '/blog': 'Blog — Rahul Narayanasamy',
   '/contact': 'Contact — Rahul Narayanasamy',
 }
 
@@ -84,6 +86,9 @@ export default function App() {
       break
     case '/experience':
       page = <Experience />
+      break
+    case '/blog':
+      page = <Blog />
       break
     case '/contact':
       page = <Contact />

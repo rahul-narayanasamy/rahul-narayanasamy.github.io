@@ -1,6 +1,8 @@
 import { useRef } from 'react'
-import { OWNER } from '../data/content'
+import { CONNECT, OWNER } from '../data/content'
+import { CONNECT_ICONS } from './connectIcons'
 import { useSectionAnimations } from '../hooks/useSectionAnimations'
+import './connect.css'
 import './contact.css'
 
 export default function Contact() {
@@ -17,19 +19,35 @@ export default function Contact() {
           Get in touch
         </h2>
         <p className="contact-sub" data-reveal>
-          Open to conversations — full-time roles, freelance work, or
-          interesting experiments. Messages get a reply within 24 hours.
+          Choose your preferred method to connect and let&apos;s discuss your
+          project.
         </p>
 
-        <div data-reveal>
-          <a className="contact-cta" href={`mailto:${OWNER.email}`}>
-            {OWNER.email} ↗
-          </a>
-          <div className="contact-status">
-            <i className="dot" /> Status: open to conversations · Response &lt;
-            24h
-          </div>
+        <div className="contact-methods" data-reveal-group>
+          {CONNECT.methods.map((m) => {
+            const Icon = CONNECT_ICONS[m.icon]
+            return (
+              <a
+                key={m.id}
+                className="connect-tile"
+                href={m.href}
+                {...(m.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                data-reveal-item
+              >
+                <span className="connect-icon">
+                  <Icon />
+                </span>
+                <span className="connect-name">{m.title}</span>
+                <span className="connect-desc">{m.desc}</span>
+                <span className="connect-arrow">↗</span>
+              </a>
+            )
+          })}
         </div>
+
+        <p className="contact-foot" data-reveal>
+          <i className="dot" /> {CONNECT.footnote}
+        </p>
 
         <ul className="socials" data-reveal-group>
           {OWNER.socials.map((s) => (

@@ -45,6 +45,15 @@
   color: var(--muted);
 }
 
+.log-line .type-cursor {
+  color: var(--red);
+  animation: cursor-blink 0.9s steps(2) infinite;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
 .loader-count {
   margin: 34px 0 18px;
   font-family: var(--font-mono);

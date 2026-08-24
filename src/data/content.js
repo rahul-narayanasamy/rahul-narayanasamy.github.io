@@ -181,8 +181,40 @@ export const NAV_LINKS = [
   { index: "01", label: "About", href: "/about" },
   { index: "02", label: "Projects", href: "/projects" },
   { index: "03", label: "Skills", href: "/skills" },
-  { index: "04", label: "Contact", href: "/contact" },
-  { index: "05", label: "Experience", href: "/experience" },
+  { index: "04", label: "Experience", href: "/experience" },
+  { index: "05", label: "Blog", href: "/blog" },
+  { index: "06", label: "Contact", href: "/contact" },
+]
+
+export const BLOG = {
+  title: "Blog",
+  intro:
+    "Notes, insights, and lessons in AI, frontend engineering, and building with agents.",
+  profileUrl: "https://medium.com/@rahulkishore227",
+}
+
+export const POSTS = [
+  {
+    id: "01",
+    category: "AI & ML",
+    date: "Aug 24, 2026",
+    readTime: "8 min read",
+    title:
+      "Multi-Agent Orchestration: How Multiple AI Agents Work Together",
+    excerpt:
+      "A practical guide to coordinating multiple AI agents — sequential pipelines, parallel fan-out, hierarchical managers, and event-driven handoffs.",
+    url: "https://medium.com/@rahulkishore227/%EF%B8%8F-multi-agent-orchestration-how-multiple-ai-agents-work-together-f5cba8f3615c",
+  },
+  {
+    id: "02",
+    category: "AI & ML",
+    date: "Aug 21, 2026",
+    readTime: "6 min read",
+    title: "Agentic Loops: The Core Execution Cycle Behind AI Agents",
+    excerpt:
+      "How AI agents use stop_reason, tool execution, and conversation history to keep working until a task is actually complete.",
+    url: "https://medium.com/@rahulkishore227/agentic-loops-the-core-execution-cycle-behind-ai-agents-0c1bf0cb159f",
+  },
 ]
 
 export const CURRENT_ROLE = {
@@ -223,7 +255,7 @@ export const EXPERIENCE = [
 export const EDUCATION = {
   degree: "Computer Science & Engineering",
   place: "Engineering",
-  period: "2014 — 2018",
+  period: "2013 — 2017",
 }
 
 export const CONNECT = {
