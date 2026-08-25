@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { PROJECTS } from '../data/content'
+import { GH_SNAKE_SVG, GH_USER, PROJECTS } from '../data/content'
 import { useSectionAnimations } from '../hooks/useSectionAnimations'
 import './projects.css'
 
@@ -29,25 +29,20 @@ export default function Projects() {
           <p className="contrib-kicker">
             <span className="tick">[</span> GitHub ·{' '}
             <a
-              href="https://github.com/Rahul-Narayanasamy"
+              href={`https://github.com/${GH_USER}`}
               target="_blank"
               rel="noreferrer"
             >
-              @Rahul-Narayanasamy
+              @{GH_USER}
             </a>{' '}
             <span className="tick">]</span>
           </p>
-          <picture>
-            <source
-              media="(prefers-color-scheme: dark)"
-              srcSet="https://raw.githubusercontent.com/Rahul-Narayanasamy/Rahul-Narayanasamy/output/github-contribution-grid-snake-dark.svg"
-            />
-            <img
-              src="https://raw.githubusercontent.com/Rahul-Narayanasamy/Rahul-Narayanasamy/output/github-contribution-grid-snake.svg"
-              alt="Animation of a snake eating contributions on the GitHub contribution graph"
-              loading="lazy"
-            />
-          </picture>
+          <img
+            src={GH_SNAKE_SVG}
+            alt="Animation of a snake eating contributions on the GitHub contribution graph"
+            loading="eager"
+            decoding="async"
+          />
         </div>
 
         <div className="proj-list">

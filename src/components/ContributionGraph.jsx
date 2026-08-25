@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './contrib.css'
 
-const GH_USER = 'Rahul-Narayanasamy'
+import { GH_USER } from '../data/content'
 const API = `https://github-contributions-api.jogruber.de/v4/${GH_USER}?y=last`
 
 const LEVEL_COLORS = [
