@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { GH_SNAKE_SVG, GH_USER, PROJECTS } from '../data/content'
+import { GH_EKG_REPO, GH_EKG_SVG, GH_SNAKE_SVG, GH_USER, PROJECTS } from '../data/content'
 import { useSectionAnimations } from '../hooks/useSectionAnimations'
 import './projects.css'
 
@@ -25,7 +25,7 @@ export default function Projects() {
           </div>
         </header>
 
-        <div className="proj-snake" data-reveal>
+        <div className="proj-github-viz" data-reveal>
           <p className="contrib-kicker">
             <span className="tick">[</span> GitHub ·{' '}
             <a
@@ -40,6 +40,22 @@ export default function Projects() {
           <img
             src={GH_SNAKE_SVG}
             alt="Animation of a snake eating contributions on the GitHub contribution graph"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+
+        <div className="proj-github-viz proj-ekg" data-reveal>
+          <p className="contrib-kicker">
+            <span className="tick">[</span> Commit Monitor ·{' '}
+            <a href={GH_EKG_REPO} target="_blank" rel="noreferrer">
+              ekg-monitor
+            </a>{' '}
+            <span className="tick">]</span>
+          </p>
+          <img
+            src={GH_EKG_SVG}
+            alt="GitHub contributions rendered as an animated production system monitor"
             loading="eager"
             decoding="async"
           />

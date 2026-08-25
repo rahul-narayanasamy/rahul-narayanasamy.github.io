@@ -1,11 +1,11 @@
-.proj-snake {
+.proj-github-viz {
   margin-bottom: clamp(48px, 7vw, 96px);
   border: 1px solid var(--line-strong);
   background: var(--card);
   padding: clamp(22px, 3vw, 36px);
 }
 
-.proj-snake .contrib-kicker {
+.proj-github-viz .contrib-kicker {
   margin: 0 0 22px;
   font-size: 11px;
   letter-spacing: 0.22em;
@@ -13,22 +13,22 @@
   color: var(--muted);
 }
 
-.proj-snake .tick {
+.proj-github-viz .tick {
   color: var(--red);
 }
 
-.proj-snake .contrib-kicker a {
+.proj-github-viz .contrib-kicker a {
   color: var(--red);
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
 }
 
-.proj-snake .contrib-kicker a:hover {
+.proj-github-viz .contrib-kicker a:hover {
   border-color: var(--red);
 }
 
-.proj-snake picture,
-.proj-snake img {
+.proj-github-viz picture,
+.proj-github-viz img {
   display: block;
   width: 100%;
   max-width: 820px;

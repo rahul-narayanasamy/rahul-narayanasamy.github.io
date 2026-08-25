@@ -1,5 +1,7 @@
 export const GH_USER = "rahul-narayanasamy"
 export const GH_SNAKE_SVG = `https://raw.githubusercontent.com/${GH_USER}/${GH_USER}/output/github-contribution-grid-snake-dark.svg`
+export const GH_EKG_REPO = "https://github.com/rahul-narayanasamy/ekg-monitor"
+export const GH_EKG_SVG = `https://raw.githubusercontent.com/${GH_USER}/${GH_USER}/output/ekg.svg?v=1`
 
 export const OWNER = {
   firstName: "RAHUL",
