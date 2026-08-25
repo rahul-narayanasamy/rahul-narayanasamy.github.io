@@ -12,6 +12,32 @@
   --line-strong: rgba(234, 228, 214, 0.32);
   --font-display: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  --nav-bg: rgba(10, 9, 8, 0.82);
+  --overlay-bg: rgba(10, 9, 8, 0.97);
+  --card: rgba(18, 16, 13, 0.6);
+  --card-deep: rgba(10, 9, 8, 0.5);
+  --card-hover: rgba(28, 17, 13, 0.7);
+  --on-ink: #0a0908;
+}
+
+html[data-theme='light'] {
+  --bg: #f2eee3;
+  --bg-2: #eae5d7;
+  --bg-3: #e0dac8;
+  --ink: #1d1912;
+  --muted: #6e6656;
+  --faint: #a89e88;
+  --red: #d42c1f;
+  --red-dim: #b02418;
+  --green: #4e7c3a;
+  --line: rgba(29, 25, 18, 0.16);
+  --line-strong: rgba(29, 25, 18, 0.36);
+  --nav-bg: rgba(242, 238, 227, 0.86);
+  --overlay-bg: rgba(242, 238, 227, 0.97);
+  --card: rgba(255, 253, 245, 0.65);
+  --card-deep: rgba(255, 253, 245, 0.85);
+  --card-hover: rgba(228, 219, 198, 0.9);
+  --on-ink: #f2eee3;
 }
 
 * {
@@ -90,6 +116,22 @@ button {
     rgba(0, 0, 0, 0.16) 3px,
     rgba(0, 0, 0, 0.16) 4px
   );
+}
+
+html[data-theme='light'] .scanlines {
+  opacity: 0.35;
+}
+
+html[data-theme='light'] .vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(60, 50, 30, 0.22) 100%
+  );
+}
+
+html[data-theme='light'] .grain {
+  opacity: 0.04;
 }
 
 .vignette {
@@ -199,7 +241,7 @@ section {
 .btn.solid {
   background: var(--ink);
   border-color: var(--ink);
-  color: #0a0908;
+  color: var(--on-ink);
 }
 
 .btn.solid:hover {

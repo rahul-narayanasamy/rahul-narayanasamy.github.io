@@ -4,7 +4,7 @@
 
 .connect-card {
   border: 1px solid var(--line-strong);
-  background: rgba(18, 16, 13, 0.6);
+  background: var(--card);
   padding: clamp(26px, 4vw, 52px);
 }
 
@@ -38,7 +38,7 @@
   gap: 8px;
   padding: clamp(20px, 2.6vw, 30px);
   border: 1px solid var(--line);
-  background: rgba(10, 9, 8, 0.5);
+  background: var(--card-deep);
   transition: border-color 0.25s ease, transform 0.25s ease,
     background 0.25s ease;
 }
@@ -85,7 +85,7 @@
 .connect-tile:hover {
   border-color: var(--red);
   transform: translateY(-4px);
-  background: rgba(28, 17, 13, 0.7);
+  background: var(--card-hover);
 }
 
 .connect-tile:hover .connect-icon {

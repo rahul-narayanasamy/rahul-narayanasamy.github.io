@@ -4,7 +4,7 @@
 
 .contrib-panel {
   border: 1px solid var(--line-strong);
-  background: rgba(18, 16, 13, 0.6);
+  background: var(--card);
   padding: clamp(22px, 3vw, 36px);
 }
 

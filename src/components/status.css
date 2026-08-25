@@ -1,7 +1,7 @@
 .status-panel {
   border: 1px solid var(--line-strong);
   padding: clamp(22px, 3vw, 34px);
-  background: rgba(18, 16, 13, 0.6);
+  background: var(--card);
   display: flex;
   flex-direction: column;
   gap: 18px;

@@ -20,7 +20,7 @@
   text-align: center;
   gap: 6px;
   border: 1px solid var(--line-strong);
-  background: rgba(18, 16, 13, 0.6);
+  background: var(--card);
   padding: clamp(28px, 3.5vw, 44px) clamp(20px, 2.5vw, 32px);
 }
 
@@ -194,7 +194,7 @@
   grid-column: 1;
   grid-row: 1;
   border: 1px solid var(--line-strong);
-  background: rgba(18, 16, 13, 0.6);
+  background: var(--card);
   padding: clamp(20px, 2.6vw, 30px);
   transition: border-color 0.25s ease, transform 0.25s ease;
 }

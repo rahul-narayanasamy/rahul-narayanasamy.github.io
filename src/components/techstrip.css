@@ -30,7 +30,7 @@
   height: 64px;
   margin-right: 14px;
   border: 1px solid var(--line);
-  background: rgba(18, 16, 13, 0.5);
+  background: var(--card);
   filter: grayscale(0.85);
   opacity: 0.75;
   transition: filter 0.25s ease, opacity 0.25s ease,

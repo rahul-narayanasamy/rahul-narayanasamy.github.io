@@ -71,7 +71,7 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   transform: rotate(-6deg);
-  background: rgba(10, 9, 8, 0.45);
+  background: var(--card-deep);
 }
 
 .proj-kicker {

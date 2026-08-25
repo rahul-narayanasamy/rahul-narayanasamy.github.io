@@ -16,7 +16,7 @@
 .resume-viewer {
   margin-top: clamp(24px, 3.5vw, 40px);
   border: 1px solid var(--line-strong);
-  background: #0a0908;
+  background: var(--bg);
 }
 
 .resume-viewer iframe {

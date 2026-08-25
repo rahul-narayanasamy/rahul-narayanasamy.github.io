@@ -4,14 +4,25 @@ import './nav.css'
 
 const RESTORE_SLACK = 180
 
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'dark'
+  return window.localStorage.getItem('theme') === 'light' ? 'light' : 'dark'
+}
+
 export default function Nav({ visible, route }) {
   const [open, setOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const [hiddenCount, setHiddenCount] = useState(0)
+  const [theme, setTheme] = useState(getInitialTheme)
 
   const navRef = useRef(null)
   const linksRef = useRef(null)
   const hiddenRef = useRef(0)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
 
   useEffect(() => {
     if (!open) return
@@ -123,14 +134,26 @@ export default function Nav({ visible, route }) {
           )}
         </nav>
 
-        <button
-          type="button"
-          className="nav-toggle"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-        >
-          Menu
-        </button>
+        <div className="nav-actions">
+          <button
+            type="button"
+            className="theme-btn"
+            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+          >
+            {theme === 'dark' ? '☀' : '☾'}
+          </button>
+
+          <button
+            type="button"
+            className="nav-toggle"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+          >
+            Menu
+          </button>
+        </div>
       </header>
 
       <div className={`menu-overlay${open ? ' open' : ''}`}>

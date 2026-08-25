@@ -15,6 +15,13 @@
     />
   </head>
   <body>
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.dataset.theme = 'light'
+        }
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
