@@ -10,6 +10,7 @@ import Contact from './components/Contact'
 import Experience from './pages/Experience'
 import Blog from './pages/Blog'
 import Resume from './pages/Resume'
+import { useAnalytics } from './hooks/useAnalytics'
 
 const ROUTES = {
   '/': 'RAHUL NARAYANASAMY — Software Engineer',
@@ -22,14 +23,30 @@ const ROUTES = {
   '/resume': 'Resume — Rahul Narayanasamy',
 }
 
+function normalizePath(pathname) {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  const lower = path.toLowerCase()
+  return lower in ROUTES ? lower : path
+}
+
 function getRoute() {
-  const path = window.location.pathname.replace(/\/+$/, '')
-  return path in ROUTES ? path : '/'
+  return normalizePath(window.location.pathname)
+}
+
+function getPageTitle(route) {
+  return ROUTES[route] ?? `Page not found — Rahul Narayanasamy (${route})`
 }
 
 export default function App() {
   const [entered, setEntered] = useState(false)
   const [route, setRoute] = useState(getRoute)
+  const pageTitle = getPageTitle(route)
+
+  useAnalytics(route, pageTitle)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [route])
 
   useEffect(() => {
     const onPop = () => setRoute(getRoute())
@@ -53,20 +70,15 @@ export default function App() {
       const href = a.getAttribute('href')
       if (!href || !href.startsWith('/') || href.startsWith('//')) return
       e.preventDefault()
-      const path = href.replace(/\/+$/, '') || '/'
-      if (path !== window.location.pathname) {
-        window.history.pushState({}, '', path)
-        setRoute(path)
+      const nextRoute = normalizePath(href)
+      if (nextRoute !== getRoute()) {
+        window.history.pushState({}, '', nextRoute)
+        setRoute(nextRoute)
       }
     }
     document.addEventListener('click', onClick)
     return () => document.removeEventListener('click', onClick)
   }, [])
-
-  useEffect(() => {
-    document.title = ROUTES[route]
-    window.scrollTo(0, 0)
-  }, [route])
 
   useEffect(() => {
     document.documentElement.style.overflow = entered ? '' : 'hidden'

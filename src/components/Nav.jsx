@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NAV_LINKS, OWNER } from '../data/content'
 import useUptime from '../hooks/useUptime'
+import { trackThemeChange } from '../lib/analytics'
 import './nav.css'
 
 const RESTORE_SLACK = 180
@@ -147,7 +148,13 @@ export default function Nav({ visible, route }) {
           <button
             type="button"
             className="theme-btn"
-            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+            onClick={() =>
+              setTheme((t) => {
+                const next = t === 'dark' ? 'light' : 'dark'
+                trackThemeChange(next)
+                return next
+              })
+            }
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
           >
