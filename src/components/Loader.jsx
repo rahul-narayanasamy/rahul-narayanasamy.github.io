@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import { trackSiteEnter } from '../lib/analytics'
 import './loader.css'
 
 const LOG_LINES = [
@@ -40,6 +41,7 @@ export default function Loader({ onEnter }) {
     const enter = () => {
       if (killed || leaving.current || !rootRef.current) return
       leaving.current = true
+      trackSiteEnter()
       gsap.to(rootRef.current, {
         yPercent: -100,
         duration: 1,
