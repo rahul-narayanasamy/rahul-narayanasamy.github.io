@@ -1,3 +1,6 @@
+export const GH_USER = "rahul-narayanasamy"
+export const GH_SNAKE_SVG = `https://raw.githubusercontent.com/${GH_USER}/${GH_USER}/output/github-contribution-grid-snake-dark.svg`
+
 export const OWNER = {
   firstName: "RAHUL",
   lastName: "NARAYANASAMY",
@@ -11,8 +14,8 @@ export const OWNER = {
   socials: [
     {
       label: "GitHub",
-      handle: "@Rahul-Narayanasamy",
-      url: "https://github.com/Rahul-Narayanasamy",
+      handle: "@rahul-narayanasamy",
+      url: "https://github.com/rahul-narayanasamy",
     },
     {
       label: "LinkedIn",
@@ -89,7 +92,7 @@ export const PROJECTS = [
     desc: "A scroll-driven GSAP landing built for the CodeTV × Webflow Cloud hackathon. Atmosphere, pacing, and type as the product.",
     stack: ["GSAP", "ScrollTrigger", "Webflow Cloud", "TypeScript"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/apogee-gsap-landing",
+    code: "https://github.com/rahul-narayanasamy/apogee-gsap-landing",
   },
   {
     id: "02",
@@ -99,7 +102,7 @@ export const PROJECTS = [
     desc: "Full-stack expense tracker with auth, transactions, analytics, and budgets — Next.js, Clerk, Prisma, and Supabase.",
     stack: ["Next.js", "Prisma", "Clerk", "Supabase"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/vault-expense-tracker",
+    code: "https://github.com/rahul-narayanasamy/vault-expense-tracker",
   },
   {
     id: "03",
@@ -109,7 +112,7 @@ export const PROJECTS = [
     desc: "Interactive terminal-style portfolio — explore projects, skills, and contact through typed commands and shell output.",
     stack: ["Next.js", "TypeScript", "Terminal UI", "Tailwind CSS"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/terminal-portfolio",
+    code: "https://github.com/rahul-narayanasamy/terminal-portfolio",
   },
   {
     id: "04",
@@ -119,7 +122,7 @@ export const PROJECTS = [
     desc: "Browser-based markdown editor with live preview, autosave, and export — CodeMirror 6, GFM rendering, local persistence.",
     stack: ["React", "CodeMirror", "Vite", "TypeScript"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/markdown-editor",
+    code: "https://github.com/rahul-narayanasamy/markdown-editor",
   },
   {
     id: "05",
@@ -129,7 +132,7 @@ export const PROJECTS = [
     desc: "Local-first pipeline that turns Hacker News and RSS into high-signal developer posts — Groq, Gemini, or Ollama.",
     stack: ["Python", "LLMs", "Streamlit", "RSS"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy",
+    code: "https://github.com/rahul-narayanasamy",
   },
   {
     id: "06",
@@ -139,7 +142,7 @@ export const PROJECTS = [
     desc: "Next.js weather surface focused on hierarchy and calm — forecast as typography, not a widget dump.",
     stack: ["Next.js", "Weather API", "Tailwind CSS"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/weather-app-nextjs",
+    code: "https://github.com/rahul-narayanasamy/weather-app-nextjs",
   },
   {
     id: "07",
@@ -149,7 +152,7 @@ export const PROJECTS = [
     desc: "Years of grid, template, and editing work at Syncfusion — UI that has to be correct for millions of cells.",
     stack: ["Blazor", "EJ2", "C#", "Data Grids"],
     live: null,
-    code: "https://github.com/Rahul-Narayanasamy/blazor-wasm-gantt-grid-poc",
+    code: "https://github.com/rahul-narayanasamy/blazor-wasm-gantt-grid-poc",
   },
 ]
 
