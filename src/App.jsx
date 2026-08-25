@@ -9,6 +9,7 @@ import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Experience from './pages/Experience'
 import Blog from './pages/Blog'
+import Resume from './pages/Resume'
 
 const ROUTES = {
   '/': 'RAHUL NARAYANASAMY — Software Engineer',
@@ -18,6 +19,7 @@ const ROUTES = {
   '/experience': 'Experience — Rahul Narayanasamy',
   '/blog': 'Blog — Rahul Narayanasamy',
   '/contact': 'Contact — Rahul Narayanasamy',
+  '/resume': 'Resume — Rahul Narayanasamy',
 }
 
 function getRoute() {
@@ -92,6 +94,9 @@ export default function App() {
       break
     case '/contact':
       page = <Contact />
+      break
+    case '/resume':
+      page = <Resume />
       break
     default:
       page = <Home entered={entered} />

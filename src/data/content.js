@@ -183,8 +183,16 @@ export const NAV_LINKS = [
   { index: "03", label: "Skills", href: "/skills" },
   { index: "04", label: "Experience", href: "/experience" },
   { index: "05", label: "Blog", href: "/blog" },
-  { index: "06", label: "Contact", href: "/contact" },
+  { index: "06", label: "Resume", href: "/resume" },
+  { index: "07", label: "Contact", href: "/contact" },
 ]
+
+export const RESUME = {
+  title: "Resume",
+  intro:
+    "A quick look at my experience, projects, and skills.",
+  pdfUrl: "/resume.pdf",
+}
 
 export const BLOG = {
   title: "Blog",

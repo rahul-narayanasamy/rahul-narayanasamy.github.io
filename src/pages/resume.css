@@ -1,0 +1,27 @@
+.resume-intro {
+  max-width: 60ch;
+  margin: 18px 0 0;
+  font-size: clamp(13px, 1.5vw, 15px);
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.resume-viewer {
+  margin-top: clamp(24px, 3.5vw, 40px);
+  border: 1px solid var(--line-strong);
+  background: #0a0908;
+}
+
+.resume-viewer iframe {
+  display: block;
+  width: 100%;
+  height: clamp(560px, 90vh, 1100px);
+  border: 0;
+}

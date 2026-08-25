@@ -112,8 +112,8 @@ export default function Footer() {
             You are the <strong>{ordinal(visitors)}</strong> visitor
           </p>
           <p className="foot-meta">
-            © {new Date().getFullYear()} {OWNER.firstName} {OWNER.lastName} ·
-            Built with React, Vite &amp; GSAP · {OWNER.location}
+            © {new Date().getFullYear()} {OWNER.firstName} {OWNER.lastName} ·{' '}
+            {OWNER.location}
           </p>
           <a
             className="to-top"

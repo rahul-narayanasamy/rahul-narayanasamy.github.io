@@ -35,6 +35,8 @@ export default function Projects() {
               <a
                 className={`proj-visual v${(i % 4) + 1}`}
                 href={p.code}
+                target="_blank"
+                rel="noreferrer"
                 aria-label={`Open ${p.title}`}
               >
                 <span className="proj-ghost">{p.id}</span>
@@ -54,9 +56,23 @@ export default function Projects() {
                 </ul>
                 <div className="proj-links">
                   {p.live && (
-                    <a className="btn" href={p.live}>Live site ↗</a>
+                    <a
+                      className="btn"
+                      href={p.live}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Live site ↗
+                    </a>
                   )}
-                  <a className="btn" href={p.code}>Source ↗</a>
+                  <a
+                    className="btn"
+                    href={p.code}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Source ↗
+                  </a>
                 </div>
               </div>
             </article>

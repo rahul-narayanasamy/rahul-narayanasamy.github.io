@@ -45,7 +45,7 @@ export default function Contact() {
           })}
         </div>
 
-        <p className="contact-foot" data-reveal>
+        <p className="connect-foot" data-reveal>
           <i className="dot" /> {CONNECT.footnote}
         </p>
 
