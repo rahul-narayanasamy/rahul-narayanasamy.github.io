@@ -228,10 +228,30 @@
   color: var(--faint);
 }
 
+.nav-clock {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  border: 1px solid var(--line-strong);
+  padding: 8px 10px;
+  line-height: 1;
+}
+
 @media (max-width: 860px) {
+  .nav-clock {
+    display: none;
+  }
+
   .nav-links {
     display: none;
   }
+
+  .nav-toggle {
+    display: block;
+  }
+}
 
 .nav-actions {
   display: flex;
@@ -258,9 +278,4 @@
   color: var(--red);
   border-color: var(--red);
   transform: rotate(15deg);
-}
-
-.nav-toggle {
-    display: block;
-  }
 }

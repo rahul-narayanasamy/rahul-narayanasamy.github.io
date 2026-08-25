@@ -90,12 +90,6 @@ export default function Home({ entered }) {
         </div>
       </section>
 
-      <section className="home-status">
-        <div className="shell home-status-wrap">
-          <StatusPanel />
-        </div>
-      </section>
-
       <section className="sec home-index">
         <div className="shell">
           <header className="sec-head" data-reveal>
@@ -143,6 +137,12 @@ export default function Home({ entered }) {
           'Ship & iterate',
         ]}
       />
+
+      <section className="home-status">
+        <div className="shell home-status-wrap">
+          <StatusPanel />
+        </div>
+      </section>
     </div>
   )
 }

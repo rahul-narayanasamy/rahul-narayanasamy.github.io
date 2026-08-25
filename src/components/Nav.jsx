@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { NAV_LINKS, OWNER } from '../data/content'
+import useUptime from '../hooks/useUptime'
 import './nav.css'
 
 const RESTORE_SLACK = 180
@@ -14,6 +15,7 @@ export default function Nav({ visible, route }) {
   const [moreOpen, setMoreOpen] = useState(false)
   const [hiddenCount, setHiddenCount] = useState(0)
   const [theme, setTheme] = useState(getInitialTheme)
+  const uptime = useUptime()
 
   const navRef = useRef(null)
   const linksRef = useRef(null)
@@ -135,6 +137,13 @@ export default function Nav({ visible, route }) {
         </nav>
 
         <div className="nav-actions">
+          <span
+            className="nav-clock"
+            title="Time since you opened this portfolio"
+          >
+            {uptime}
+          </span>
+
           <button
             type="button"
             className="theme-btn"
