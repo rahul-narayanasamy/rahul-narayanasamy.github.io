@@ -25,6 +25,31 @@ export default function Projects() {
           </div>
         </header>
 
+        <div className="proj-snake" data-reveal>
+          <p className="contrib-kicker">
+            <span className="tick">[</span> GitHub ·{' '}
+            <a
+              href="https://github.com/Rahul-Narayanasamy"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @Rahul-Narayanasamy
+            </a>{' '}
+            <span className="tick">]</span>
+          </p>
+          <picture>
+            <source
+              media="(prefers-color-scheme: dark)"
+              srcSet="https://raw.githubusercontent.com/Rahul-Narayanasamy/Rahul-Narayanasamy/output/github-contribution-grid-snake-dark.svg"
+            />
+            <img
+              src="https://raw.githubusercontent.com/Rahul-Narayanasamy/Rahul-Narayanasamy/output/github-contribution-grid-snake.svg"
+              alt="Animation of a snake eating contributions on the GitHub contribution graph"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+
         <div className="proj-list">
           {PROJECTS.map((p, i) => (
             <article

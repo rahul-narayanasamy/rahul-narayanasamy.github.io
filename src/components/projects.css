@@ -1,3 +1,41 @@
+.proj-snake {
+  margin-bottom: clamp(48px, 7vw, 96px);
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  padding: clamp(22px, 3vw, 36px);
+}
+
+.proj-snake .contrib-kicker {
+  margin: 0 0 22px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.proj-snake .tick {
+  color: var(--red);
+}
+
+.proj-snake .contrib-kicker a {
+  color: var(--red);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.proj-snake .contrib-kicker a:hover {
+  border-color: var(--red);
+}
+
+.proj-snake picture,
+.proj-snake img {
+  display: block;
+  width: 100%;
+  max-width: 820px;
+  margin-inline: auto;
+  height: auto;
+}
+
 .proj-list {
   display: flex;
   flex-direction: column;
