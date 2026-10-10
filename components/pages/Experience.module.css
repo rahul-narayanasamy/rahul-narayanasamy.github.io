@@ -1,0 +1,166 @@
+.roles {
+  border-top: 1px solid var(--line-strong);
+}
+.role {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  padding-block: clamp(32px, 5vw, 56px);
+  border-bottom: 1px solid var(--line-strong);
+}
+.when {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+.period {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.what {
+  display: grid;
+  gap: 16px;
+  max-width: 820px;
+}
+.org {
+  font-size: clamp(28px, 4.2vw, 50px);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.orgCurrent {
+  color: var(--red);
+}
+.title {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.summary {
+  color: var(--muted);
+  max-width: 64ch;
+}
+.engagements {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.engagements > li {
+  border-bottom: 1px solid var(--line);
+}
+.engagements summary {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 4px;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 0.25s ease;
+}
+.engagements summary::-webkit-details-marker {
+  display: none;
+}
+.engagements summary:hover {
+  background: var(--red-wash);
+}
+.ePeriod {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.eContext {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.eToggle {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line-strong);
+  transition: transform 0.35s var(--ease);
+}
+details[open] .eToggle {
+  transform: rotate(45deg);
+  border-color: var(--red);
+  color: var(--red);
+}
+.notes {
+  display: grid;
+  gap: 8px;
+  padding: 0 4px 20px 138px;
+  color: var(--muted);
+  font-size: 13px;
+  animation: notes-in 0.45s var(--ease);
+}
+.notes li {
+  position: relative;
+  padding-left: 18px;
+}
+.notes li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--red);
+}
+@keyframes notes-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.edu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 26px 6px;
+  border-block: 1px solid var(--line-strong);
+}
+.eduTitle {
+  margin-bottom: 8px;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .role {
+    grid-template-columns: 1fr;
+  }
+  .engagements summary {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+  .ePeriod {
+    grid-column: 1;
+  }
+  .eContext {
+    grid-column: 1;
+  }
+  .eToggle {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .notes {
+    padding-left: 4px;
+  }
+  .edu {
+    flex-direction: column;
+  }
+}

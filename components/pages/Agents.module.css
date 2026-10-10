@@ -1,0 +1,198 @@
+.trace {
+  padding: clamp(18px, 3vw, 32px);
+}
+.traceHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.traceHead :global(.btn) {
+  min-height: 40px;
+}
+.seq {
+  position: relative;
+  margin-top: 26px;
+  overflow-x: auto;
+}
+.actors,
+.lifelines {
+  display: grid;
+  min-width: 640px;
+}
+.actors span {
+  justify-self: center;
+  padding: 8px 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.actors .actorOn {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--on-red);
+}
+.lifelines {
+  position: absolute;
+  inset: 34px 0 0;
+  pointer-events: none;
+}
+.lifelines i {
+  justify-self: center;
+  width: 1px;
+  background: repeating-linear-gradient(var(--line-strong) 0 4px, #0000 4px 8px);
+  transition: background 0.3s ease;
+}
+.lifelines .lifeOn {
+  background: var(--red);
+}
+.steps {
+  position: relative;
+  min-width: 640px;
+  padding-block: 18px 6px;
+}
+.step {
+  position: relative;
+  height: 46px;
+  transition: opacity 0.3s ease;
+}
+.msg {
+  position: absolute;
+  top: 4px;
+  padding-inline: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s ease;
+}
+.idx {
+  color: var(--red);
+}
+.arrow {
+  position: absolute;
+  top: 28px;
+  height: 1px;
+  background: var(--muted);
+}
+.arrow.ret {
+  background: repeating-linear-gradient(90deg, var(--muted) 0 5px, #0000 5px 9px);
+}
+.arrow::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  border: 4.5px solid #0000;
+}
+.toRight::after {
+  right: -2px;
+  border-left: 7px solid var(--muted);
+}
+.toLeft::after {
+  left: -2px;
+  border-right: 7px solid var(--muted);
+}
+.now .msg {
+  color: var(--ink);
+}
+.now .arrow {
+  background: var(--red);
+  animation: draw 0.5s var(--ease) both;
+}
+.toRight.now,
+.now .toRight {
+  transform-origin: left;
+}
+.now .toLeft {
+  transform-origin: right;
+}
+.now .arrow.ret {
+  background: repeating-linear-gradient(90deg, var(--red) 0 5px, #0000 5px 9px);
+}
+.now .toRight::after {
+  border-left-color: var(--red);
+}
+.now .toLeft::after {
+  border-right-color: var(--red);
+}
+.later {
+  opacity: 0.2;
+}
+.done {
+  opacity: 0.6;
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+.caption {
+  margin-top: 18px;
+  padding-top: 16px;
+  min-height: 52px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+.legend {
+  display: flex;
+  gap: 24px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.solidKey,
+.dashKey {
+  width: 26px;
+  height: 1px;
+  background: var(--muted);
+}
+.dashKey {
+  background: repeating-linear-gradient(90deg, var(--muted) 0 5px, #0000 5px 9px);
+}
+
+.focus {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.focus article {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 24px;
+  border: 1px solid var(--line-strong);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.focus article:hover {
+  border-color: var(--red);
+  background: var(--red-wash);
+}
+.focus h3 {
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.focus p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+@media (max-width: 860px) {
+  .focus {
+    grid-template-columns: 1fr;
+  }
+}

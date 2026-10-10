@@ -1,0 +1,331 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 90;
+  height: var(--nav-h);
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.45s var(--ease), background-color 0.4s var(--ease);
+}
+.hidden {
+  transform: translateY(-100%);
+}
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.brand b {
+  font-weight: 800;
+}
+.brandRole {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 30px);
+  margin-inline: auto;
+}
+.links > a,
+.more > button {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding-block: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+.links > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.links > a:hover,
+.links > a[aria-current="page"],
+.more > button:hover,
+.more > button[aria-expanded="true"],
+.moreActive {
+  color: var(--ink) !important;
+}
+.links > a:hover::after,
+.links > a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.no {
+  font-size: 9px;
+  color: var(--red);
+}
+
+.more {
+  position: relative;
+}
+.caret {
+  display: inline-block;
+  font-size: 9px;
+  transition: transform 0.3s var(--ease);
+}
+.more > button[aria-expanded="true"] .caret {
+  transform: rotate(180deg);
+}
+.dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -12px;
+  min-width: 230px;
+  padding: 6px;
+  background: var(--overlay-bg);
+  border: 1px solid var(--line-strong);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease, transform 0.3s var(--ease), visibility 0s 0.3s;
+}
+.dropdownOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.25s ease, transform 0.3s var(--ease);
+}
+.dropdown a {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: baseline;
+  padding: 11px 12px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dropdown a:hover,
+.dropdown a:focus-visible,
+.dropdown a[aria-current="page"] {
+  background: var(--red);
+  color: var(--on-red);
+}
+.dropdown a:hover .no,
+.dropdown a:focus-visible .no,
+.dropdown a[aria-current="page"] .no {
+  color: var(--on-red);
+}
+.ddArrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.3s var(--ease);
+}
+.dropdown a:hover .ddArrow {
+  opacity: 1;
+  transform: none;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.clock {
+  padding: 6px 10px;
+  border: 1px solid var(--red-dim);
+  color: var(--red);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding-inline: 8px;
+  border: 1px solid var(--line-strong);
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.icon:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.icon kbd {
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.sun {
+  display: inline-block;
+  transition: transform 0.6s var(--ease);
+}
+.icon:hover .sun {
+  transform: rotate(90deg);
+}
+.paletteBtn {
+  gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 10px;
+}
+.paletteName {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* Swatch shows the active palette: an ember dot, or a black / white split. Fixed colours on purpose. */
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e8382a;
+  box-shadow: 0 0 0 1px var(--line-strong);
+  transition: transform 0.4s var(--ease);
+}
+.swatchMono {
+  background: linear-gradient(90deg, #000 50%, #fff 50%);
+}
+.paletteBtn:hover .swatch {
+  transform: rotate(180deg);
+}
+.overlayLook {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 24px;
+}
+.overlayLook button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  border: 1px solid var(--line-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.menuBtn {
+  display: none;
+  height: 38px;
+  padding-inline: 16px;
+  border: 1px solid var(--line-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--red);
+  transform-origin: left;
+}
+
+/* Full-screen menu (mobile and narrow tablets). */
+.overlay {
+  position: fixed;
+  inset: var(--nav-h) 0 0;
+  z-index: 89;
+  overflow-y: auto;
+  padding-block: 28px 40px;
+  background: var(--overlay-bg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.overlayOpen {
+  opacity: 1;
+}
+.overlayList li {
+  border-bottom: 1px solid var(--line);
+  animation: item-in 0.5s var(--ease) both;
+  animation-delay: calc(var(--i) * 35ms);
+}
+.overlayList a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-block: 12px;
+  font-size: clamp(26px, 8vw, 40px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.overlayList a[aria-current="page"] {
+  color: var(--red);
+}
+.overlayNo {
+  min-width: 2.2ch;
+  font-size: 12px;
+  color: var(--red);
+}
+.overlayFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 28px;
+  font-size: 12px;
+  color: var(--muted);
+}
+@keyframes item-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (max-width: 1080px) {
+  .clock {
+    display: none;
+  }
+}
+@media (max-width: 960px) {
+  .links,
+  .tools > .icon:first-of-type {
+    display: none;
+  }
+  .menuBtn {
+    display: block;
+  }
+  .tools {
+    margin-left: auto;
+  }
+}
+@media (max-width: 420px) {
+  .brandRole,
+  .paletteName {
+    display: none;
+  }
+}

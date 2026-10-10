@@ -1,79 +1,59 @@
-# Portfolio — Rahul Narayanasamy
+# rahul-narayanasamy.github.io
 
-Personal portfolio site for **Rahul Narayanasamy**, a software engineer based in Bengaluru. Built with React, Vite, and GSAP — a cinematic, motion-led frontend with client-side routing and no backend.
+Personal portfolio of Rahul Narayanasamy, Software Engineer, Bengaluru.
+**Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules**, statically exported for GitHub Pages.
 
-## Features
+The visual language comes from the original site: JetBrains Mono everywhere, warm black with one red,
+film grain + scanlines + vignette, a terminal boot loader, and numbered pages with outlined indices.
 
-- **Cinematic loader** — entry animation before the main site
-- **Hero** — live Bengaluru time, weather (Open-Meteo), and year progress
-- **GitHub contribution graph** — last 12 months via public API
-- **Projects, skills & experience** — content driven from a single data file
-- **Contact & connect** — mailto links and social profiles
-- **Footer** — rotating dev quotes and visitor counter
-- **Scroll animations** — GSAP + ScrollTrigger throughout
-
-## Tech stack
-
-| Layer | Tools |
-|-------|-------|
-| UI | React 19 |
-| Build | Vite 8 |
-| Motion | GSAP, ScrollTrigger |
-| Lint | Oxlint |
-| Fonts | JetBrains Mono (Google Fonts) |
-
-## Project structure
-
-```
-src/
-  components/   # UI sections (Hero, Nav, Projects, Footer, …)
-  pages/        # Home, Experience
-  data/         # content.js — edit copy, projects, skills here
-  hooks/        # useSectionAnimations
-public/         # Static assets (avatar, favicons, icons)
-```
-
-All portfolio copy, projects, and links live in `src/data/content.js`. Update that file to change what appears on the site.
-
-## Getting started
-
-**Prerequisites:** Node.js 18+
+## Run it
 
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:3000
+npm run build    # static site in ./out
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+## Pages
 
-## Scripts
+| No. | Route | What's there |
+| --- | --- | --- |
+| 00 | `/` | Hero (live IST clock, weather, year progress), current role, site directory, GitHub graph, contact |
+| 01 | `/about/` | Story, principles, journey timeline, certifications |
+| 02 | `/projects/` | Client case studies (accordion + flow schematic) and side projects (generated posters) |
+| 03 | `/skills/` | Expandable skill rows, toolbox |
+| 04 | `/experience/` | EPAM and Syncfusion, with each client engagement |
+| 05 | `/systems/` | Interactive frontend architecture diagram |
+| 06 | `/agents/` | Playable sequence diagram of one MCP tool-using turn |
+| 07 | `/blog/` | Medium articles |
+| 08 | `/resume/` | Inline PDF, open / download |
+| 09 | `/contact/` | Click-to-copy email, contact cards, socials |
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server with HMR |
-| `npm run build` | Production build → `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm run lint` | Run Oxlint |
+The order lives in `lib/pages.ts`; nav, directory, pager and ⌘K menu all read from it.
 
-## Deployment
+## Edit content
 
-Build the static site and deploy the `dist/` folder to any static host (GitHub Pages, Vercel, Netlify, Cloudflare Pages, etc.):
+All copy lives in typed files under `content/`:
 
-```bash
-npm run build
-```
+| File | What it holds |
+| --- | --- |
+| `profile.ts` | Name, links, intro, story, journey, principles, footer quotes |
+| `projects.ts` | Side projects (GitHub) and anonymised client case studies |
+| `experience.ts` | Roles, engagements, education |
+| `skills.ts` | Skill rows, toolbox, home ticker |
+| `system.ts` | Architecture layers, design questions, agent sequence |
+| `writing.ts` | Medium articles, certifications |
 
-`dist/` is gitignored — CI/CD should run `npm run build` on deploy rather than committing build output.
+`public/avatar.png` and `public/resume.pdf` are the photo and resume.
 
-## External services
+## Interactions
 
-These public APIs are called at runtime (no API keys required):
+- Boot loader runs once per browser session; any key or click skips it; off under reduced motion
+- Route changes play a red curtain naming the page you're entering
+- `[` / `]` previous / next page · `⌘K`, `Ctrl K` or `/` command menu · `T` toggles light / dark · `P` switches palette
+- Two palettes × two modes: **Mono** (black & white, the default) and **Ember** (red), each in dark and light. Tokens live in `app/globals.css`; the choice is remembered per browser
 
-- [Open-Meteo](https://open-meteo.com/) — weather
-- [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api) — contribution graph
-- [DummyJSON](https://dummyjson.com/) / [RealInspire](https://api.realinspire.xyz/) — footer quotes (with local fallbacks)
-- [Abacus](https://abacus.jasoncameron.dev/) — visitor counter
+## Deploy
 
-## License
-
-Private project. All rights reserved unless otherwise noted.
+Push to `main` of the `rahul-narayanasamy.github.io` repo. `.github/workflows/deploy.yml` builds and
+publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** once.
