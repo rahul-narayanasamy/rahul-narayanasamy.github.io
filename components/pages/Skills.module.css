@@ -1,0 +1,149 @@
+.rows {
+  border-top: 1px solid var(--line-strong);
+}
+.row {
+  border-bottom: 1px solid var(--line-strong);
+}
+.head {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr) auto 34px;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 22px 12px;
+  text-align: left;
+  isolation: isolate;
+  overflow: hidden;
+}
+.head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.45s var(--ease);
+}
+.head:hover::before,
+.head:focus-visible::before,
+.open .head::before {
+  transform: scaleY(1);
+}
+.no {
+  font-size: 11px;
+  color: var(--red);
+  transition: color 0.3s ease;
+}
+.name {
+  font-size: clamp(18px, 3vw, 34px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  transition: transform 0.5s var(--ease), color 0.3s ease;
+}
+.as {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+.plus {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  transition: transform 0.4s var(--ease), border-color 0.3s ease;
+}
+.head:hover,
+.open .head {
+  color: var(--on-red);
+}
+.head:hover .no,
+.head:hover .as,
+.open .head .no,
+.open .head .as {
+  color: var(--on-red);
+}
+.head:hover .name,
+.open .head .name {
+  transform: translateX(12px);
+}
+.head:hover .plus,
+.open .plus {
+  border-color: var(--on-red);
+}
+.open .plus {
+  transform: rotate(45deg);
+}
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease);
+}
+.open .body {
+  grid-template-rows: 1fr;
+}
+.inner {
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  gap: 14px;
+  padding-left: 90px;
+  max-width: 900px;
+  color: var(--muted);
+}
+.open .inner {
+  padding-block: 22px 26px;
+}
+.seen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.seen .label {
+  margin-right: 8px;
+}
+
+.toolbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pill {
+  padding: 9px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.35s var(--ease);
+}
+.pill:hover {
+  color: var(--ink);
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .head {
+    grid-template-columns: 34px minmax(0, 1fr) 30px;
+    padding-inline: 6px;
+  }
+  .as {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .plus {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+  .inner {
+    padding-left: 6px;
+  }
+}

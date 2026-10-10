@@ -1,0 +1,233 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.diagram {
+  position: relative;
+  padding: clamp(20px, 3vw, 34px);
+  background-image: radial-gradient(var(--line) 1px, #0000 1px);
+  background-size: 16px 16px;
+}
+.lane {
+  display: flex;
+  align-items: stretch;
+  row-gap: 14px;
+  margin-top: 16px;
+}
+.hop {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.hop .node {
+  flex: 1;
+  min-width: 0;
+}
+.endpoint {
+  display: grid;
+  place-items: center;
+  padding: 0 14px;
+  min-height: 74px;
+  border: 1px dashed var(--line-strong);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wire {
+  position: relative;
+  flex-shrink: 0;
+  width: 22px;
+  height: 1px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+.wire i {
+  position: absolute;
+  top: 0;
+  left: -10px;
+  width: 10px;
+  height: 1px;
+  background: var(--red);
+  animation: packet 1.6s linear infinite;
+}
+@keyframes packet {
+  to {
+    left: 100%;
+  }
+}
+.node {
+  display: grid;
+  gap: 2px;
+  min-height: 74px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  text-align: left;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, transform 0.3s var(--ease);
+}
+.node:hover {
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+.node[aria-pressed="true"] {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--on-red);
+}
+.nodeNo {
+  font-size: 9px;
+  color: var(--red);
+}
+.node b {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nodeSub {
+  font-size: 10px;
+  color: var(--muted);
+}
+.node[aria-pressed="true"] .nodeNo,
+.node[aria-pressed="true"] .nodeSub {
+  color: var(--on-red);
+}
+.boundary {
+  position: relative;
+  margin-top: 34px;
+  padding: 30px 16px 16px;
+  border: 1px dashed var(--red-dim);
+}
+.boundaryLabel {
+  position: absolute;
+  top: -8px;
+  left: 14px;
+  padding-inline: 8px;
+  background: var(--bg-2);
+  color: var(--red);
+}
+.appLane {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.hint {
+  margin-top: 18px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.detail {
+  padding: clamp(20px, 3vw, 34px);
+}
+.detailHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.detailNo {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1;
+  color: #0000;
+  -webkit-text-stroke: 1px var(--red);
+}
+.detailTitle {
+  margin-top: 18px;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 800;
+  text-transform: uppercase;
+  animation: swap 0.45s var(--ease);
+}
+.detailList {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+  animation: swap 0.5s var(--ease);
+}
+.detailList dt {
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.detailList dd {
+  color: var(--muted);
+  font-size: 13px;
+}
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line-strong);
+}
+.questions li {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 24px 22px 28px 0;
+}
+.questions li + li {
+  padding-left: 22px;
+  border-left: 1px solid var(--line);
+}
+.questions b {
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.questions p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.qNo {
+  font-size: 11px;
+  color: var(--red);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .appLane,
+  .questions {
+    grid-template-columns: 1fr;
+  }
+  .questions li + li {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .lane {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hop {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .wire {
+    width: 1px;
+    height: 18px;
+    margin-left: 24px;
+  }
+  .wire i {
+    display: none;
+  }
+}
