@@ -1,0 +1,235 @@
+.panel {
+  position: relative;
+  padding: clamp(20px, 3vw, 36px);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.live {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red), 0 0 40px color-mix(in srgb, var(--red) 18%, transparent);
+}
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+.hud {
+  display: flex;
+  gap: clamp(18px, 3.4vw, 44px);
+}
+.hud div {
+  display: grid;
+  gap: 2px;
+}
+.hud dd {
+  order: -1;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hud small {
+  font-size: 0.5em;
+  font-weight: 600;
+  color: var(--muted);
+}
+.hud dt {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.board {
+  min-width: 600px;
+}
+.months {
+  position: relative;
+  overflow: hidden;
+  height: 16px;
+  margin-bottom: 6px;
+}
+.months span {
+  position: absolute;
+  top: 0;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.canvasWrap {
+  position: relative;
+}
+.canvas {
+  display: block;
+  width: 100%;
+  height: 90px;
+  cursor: crosshair;
+}
+.live .canvas {
+  touch-action: none;
+}
+.loading,
+.error {
+  font-size: 12px;
+  color: var(--muted);
+}
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(2px);
+  text-align: center;
+  animation: fade 0.3s ease;
+}
+.overTitle {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.overActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.overActions :global(.btn) {
+  min-height: 40px;
+  padding: 0 18px;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 20px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+}
+.dotLive {
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red);
+}
+.controls {
+  display: flex;
+  gap: 8px;
+}
+.ctl {
+  padding: 9px 14px;
+  border: 1px solid var(--line-strong);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.ctl:hover:not(:disabled) {
+  border-color: var(--red);
+  color: var(--red);
+}
+.ctl:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.ctlPrimary {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--on-red);
+}
+.ctlPrimary:hover:not(:disabled) {
+  background: transparent;
+}
+
+/* On-screen d-pad: touch devices only, while playing. */
+.pad {
+  display: none;
+  grid-template-areas: ". up ." "left down right";
+  grid-template-columns: repeat(3, 52px);
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.pad button {
+  height: 46px;
+  border: 1px solid var(--line-strong);
+  font-size: 18px;
+  touch-action: manipulation;
+}
+.pad button:active {
+  background: var(--red);
+  color: var(--on-red);
+}
+.up {
+  grid-area: up;
+}
+.down {
+  grid-area: down;
+}
+.left {
+  grid-area: left;
+}
+.right {
+  grid-area: right;
+}
+@media (hover: none) and (pointer: coarse) {
+  .pad {
+    display: grid;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+/* On phones the whole year fits on screen — the game needs to see every cell. */
+@media (max-width: 640px) {
+  .board {
+    min-width: 0;
+  }
+  .months span {
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+  .foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls > * {
+    flex: 1;
+  }
+}

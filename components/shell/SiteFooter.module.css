@@ -1,0 +1,71 @@
+.footer {
+  margin-top: clamp(64px, 9vw, 120px);
+  border-top: 1px solid var(--line-strong);
+}
+.quote {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding-block: clamp(56px, 8vw, 96px);
+  text-align: center;
+}
+.mark {
+  font-size: 34px;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--red);
+  letter-spacing: -0.1em;
+}
+.text {
+  max-width: 26ch;
+  font-size: clamp(20px, 3.2vw, 34px);
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-wrap: balance;
+  animation: quote-in 0.8s var(--ease) both;
+}
+.by {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 28px;
+  padding-block: 26px 34px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.time {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.links a {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.links a:hover {
+  color: var(--red);
+}
+.top {
+  color: var(--ink) !important;
+}
+@keyframes quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
