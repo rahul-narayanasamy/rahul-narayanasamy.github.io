@@ -30,7 +30,6 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary", title: `${profile.name} — ${profile.role}`, description },
   robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg" },
 };
 
 export const viewport: Viewport = {
