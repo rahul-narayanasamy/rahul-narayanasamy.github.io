@@ -60,8 +60,12 @@ publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** o
 
 ## Home portrait
 
-The hero portrait (`components/home/AsciiPortrait.tsx`) is generated in the browser from `public/avatar.png`:
-the head and shoulders are sampled into ~3,000 text characters that spiral in when the page opens and swirl
-away from the cursor. The characters glow, so they are always drawn on a dark ground: the page itself in dark
-themes, a dark panel in light themes. Colours come from the `--portrait-*` variables in `app/globals.css`, one
-set per palette. The animation loop sleeps when nothing is moving and is skipped under `prefers-reduced-motion`.
+The hero portrait (`components/home/AsciiPortrait.tsx`) is drawn in the browser from `public/portrait.png`, a
+head-and-shoulders cut-out of the avatar with a transparent background. It is sampled into ~3,500 text
+characters that spiral in when the page opens and swirl away from the cursor. The characters glow, so they are
+always drawn on a dark ground: the page itself in dark themes, a dark panel in light themes. Colours come from
+the `--portrait-*` variables in `app/globals.css`, one set per palette. The animation loop sleeps when nothing is
+moving and is skipped under `prefers-reduced-motion`.
+
+`public/avatar.png` (512px) is the photo used on the About page and as the social preview image; the favicon files
+in `app/` are cropped from the same photo.

@@ -121,7 +121,7 @@ export function Hero() {
         </div>
 
         <figure className={`${styles.portrait} ${styles.anim}`} style={{ "--d": "260ms" } as React.CSSProperties}>
-          <AsciiPortrait src="/avatar.png" alt={`Portrait of ${profile.name}, drawn in text characters`} />
+          <AsciiPortrait src="/portrait.png" alt={`Portrait of ${profile.name}, drawn in text characters`} />
           <figcaption>
             <span>
               <span className="status-dot" /> {profile.availability}

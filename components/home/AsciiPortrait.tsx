@@ -41,110 +41,34 @@ const RAMP: string[][] = [
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 
 /**
- * The photo is a head-and-shoulders shot with a lot of hoodie. Cropping in on the head gives the face
- * about 1.3× more character cells, which is what keeps it recognisable. Fractions of the image.
+ * How much ink a cell gets (0 = blank, 1 = densest) from its brightness. A smooth ramp: skin glows,
+ * mid-tones fall in between, and the near-black hair and hoodie recede to a faint texture, which is
+ * what makes the face read as a lit portrait.
  */
-const CROP = { x: 0.13, y: 0.04, size: 0.76 };
-
-// Brightness bands in the photo: black hair and hoodie < 0.085, the grey backdrop up to 0.24, skin above.
-const DARK_MAX = 0.085;
-const BRIGHT_MIN = 0.24;
-const DISC = 0.93;
+const density = (lum: number) => 0.2 + 0.78 * Math.pow(clamp01(lum / 0.68), 0.8);
 
 /**
- * The photo's backdrop holds a code snippet (left) and a </> icon (right), in fixed places. They would
- * read as stray noise next to the figure, so cells there are left blank. (u, w) run from -1 to 1.
+ * Samples the portrait into a grid of characters, then optionally scatters each one for the intro.
+ * The source image is a cut-out (transparent behind the figure), so only the figure gets characters.
  */
-const isBackdropArt = (u: number, w: number) => (u < -0.52 && w < 0.38) || (u > 0.5 && w < 0.12);
-
-/**
- * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank. Skin glows (dense)
- * and the dark hair and hoodie recede, which is what makes the face read as a lit portrait.
- */
-function density(lum: number) {
-  if (lum < DARK_MAX) return 0.44 - 0.14 * (lum / DARK_MAX);
-  if (lum < BRIGHT_MIN) return 0;
-  return 0.26 + 0.52 * clamp01((lum - BRIGHT_MIN) / 0.66);
-}
-
-/** Samples the photo into a grid of characters, then optionally scatters each one for the intro. */
 function buildParticles(img: HTMLImageElement, scatter: boolean): Particle[] {
   const sample = document.createElement("canvas");
   sample.width = COLS;
   sample.height = ROWS;
   const sx = sample.getContext("2d", { willReadFrequently: true })!;
   sx.imageSmoothingQuality = "high";
-  sx.drawImage(
-    img,
-    CROP.x * img.naturalWidth,
-    CROP.y * img.naturalHeight,
-    CROP.size * img.naturalWidth,
-    CROP.size * img.naturalHeight,
-    0,
-    0,
-    COLS,
-    ROWS,
-  );
+  sx.drawImage(img, 0, 0, COLS, ROWS);
   const px = sx.getImageData(0, 0, COLS, ROWS).data;
 
-  // Pass 1: ink amount per cell.
-  const ink = new Float32Array(COLS * ROWS);
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      // Outside the photo's circular frame, and over the backdrop art, there is nothing to draw.
-      // (u, w) are positions in the whole photo, not the crop, so the masks above stay valid.
-      const u = (CROP.x + ((c + 0.5) / COLS) * CROP.size) * 2 - 1;
-      const w = (CROP.y + ((r + 0.5) / ROWS) * CROP.size) * 2 - 1;
-      if (u * u + w * w > DISC * DISC || isBackdropArt(u, w)) continue;
-      const i = (r * COLS + c) * 4;
-      ink[r * COLS + c] = density((0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255);
-    }
-  }
-
-  // Pass 2: keep only the main figure. The photo's backdrop has a code snippet and a </> icon; as
-  // separate islands of ink they would read as noise, so drop everything but the biggest shape.
-  const label = new Int32Array(COLS * ROWS).fill(-1);
-  let best = -1;
-  let bestSize = 0;
-  let next = 0;
-  for (let start = 0; start < ink.length; start++) {
-    if (ink[start] <= 0 || label[start] >= 0) continue;
-    const stack = [start];
-    label[start] = next;
-    let size = 0;
-    while (stack.length) {
-      const k = stack.pop()!;
-      size++;
-      const kr = Math.floor(k / COLS);
-      const kc = k % COLS;
-      for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-          const nr = kr + dr;
-          const nc = kc + dc;
-          if (nr < 0 || nc < 0 || nr >= ROWS || nc >= COLS) continue;
-          const n = nr * COLS + nc;
-          if (ink[n] > 0 && label[n] < 0) {
-            label[n] = next;
-            stack.push(n);
-          }
-        }
-      }
-    }
-    if (size > bestSize) {
-      bestSize = size;
-      best = next;
-    }
-    next++;
-  }
-
-  // Pass 3: turn cells into particles.
   const out: Particle[] = [];
   const cx = W / 2;
   const cy = H / 2;
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
-      const v = ink[r * COLS + c];
-      if (label[r * COLS + c] !== best) continue;
+      const i = (r * COLS + c) * 4;
+      if (px[i + 3] < 128) continue; // behind the figure
+      const lum = (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
+      const v = density(lum);
       // Level 0 is empty space; 1..8 index the ramp. A little noise dithers the edges.
       const level = Math.floor(v * (RAMP.length + 1) + (Math.random() - 0.5) * 0.4);
       if (level < 1) continue;
@@ -233,7 +157,7 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      ctx.font = `500 ${FONT_PX}px ${font}`;
+      ctx.font = `600 ${FONT_PX}px ${font}`;
       ctx.textBaseline = "alphabetic";
       const tones = [colors.ink, colors.muted, colors.faint];
       let current = "";
