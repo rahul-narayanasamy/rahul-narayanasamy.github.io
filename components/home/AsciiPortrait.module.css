@@ -1,0 +1,8 @@
+.canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  cursor: crosshair;
+  /* Vertical swipes still scroll the page on touch screens; sideways drags stir the portrait. */
+  touch-action: pan-y;
+}

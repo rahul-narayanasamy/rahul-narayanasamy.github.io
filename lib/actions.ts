@@ -14,19 +14,37 @@ export async function copyEmail() {
   }
 }
 
-export type Palette = "ember" | "mono";
+export type Palette = "mono" | "ember" | "moss";
 
-/** Switches between black & white "Mono" (the default) and the red "Ember" palette. Independent of light / dark. */
-export function togglePalette() {
+/** Order the P key cycles through. Mono is the default. */
+export const PALETTES: { id: Palette; label: string; note: string }[] = [
+  { id: "mono", label: "Mono", note: "black & white" },
+  { id: "ember", label: "Ember", note: "red" },
+  { id: "moss", label: "Moss", note: "green" },
+];
+
+/** The active palette. Ember is the base theme, so it is the absence of a data attribute. */
+export function getPalette(): Palette {
+  const p = document.documentElement.dataset.palette;
+  return p === "mono" || p === "moss" ? p : "ember";
+}
+
+/** Applies and remembers a palette. Independent of light / dark. */
+export function setPalette(next: Palette) {
   const root = document.documentElement;
-  const next: Palette = root.dataset.palette === "mono" ? "ember" : "mono";
-  if (next === "mono") root.dataset.palette = "mono";
-  else delete root.dataset.palette;
+  if (next === "ember") delete root.dataset.palette;
+  else root.dataset.palette = next;
   try {
     localStorage.setItem("palette", next);
   } catch {}
   window.dispatchEvent(new CustomEvent("themechange", { detail: next }));
-  toast(next === "mono" ? "Palette · Mono (black & white)" : "Palette · Ember (red)");
+  const meta = PALETTES.find((p) => p.id === next)!;
+  toast(`Palette · ${meta.label} (${meta.note})`);
+}
+
+export function cyclePalette() {
+  const i = PALETTES.findIndex((p) => p.id === getPalette());
+  setPalette(PALETTES[(i + 1) % PALETTES.length].id);
 }
 
 export function toggleTheme() {
