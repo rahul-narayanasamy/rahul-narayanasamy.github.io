@@ -18,11 +18,15 @@ type Particle = {
 // Logical drawing space. The canvas is scaled to its CSS size × devicePixelRatio, so text stays crisp.
 const W = 480;
 const H = 480;
-const COLS = 120;
-const ROWS = 80;
-const STEP_X = W / COLS;
-const STEP_Y = H / ROWS;
-const FONT_PX = 6.4;
+
+/**
+ * Character grid per mode. A light page is a pen drawing, which needs finer lines to keep the face
+ * legible, so it gets a denser grid of smaller characters than the glowing dark version.
+ */
+const GRID = {
+  dark: { cols: 120, rows: 80, font: 6.4 },
+  light: { cols: 144, rows: 96, font: 5.3 },
+} as const;
 
 // Characters per brightness level, light to dense. Two per level breaks up banding.
 const RAMP: string[][] = [
@@ -38,6 +42,12 @@ const RAMP: string[][] = [
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 
+/**
+ * The photo is a head-and-shoulders shot with a lot of hoodie. Cropping in on the head gives the face
+ * about 1.3× more character cells, which is what keeps it recognisable. Fractions of the image.
+ */
+const CROP = { x: 0.13, y: 0.04, size: 0.76 };
+
 // Brightness bands in the photo: black hair and hoodie < 0.085, the grey backdrop up to 0.24, skin above.
 const DARK_MAX = 0.085;
 const BRIGHT_MIN = 0.24;
@@ -50,33 +60,33 @@ const DISC = 0.93;
 const isBackdropArt = (u: number, w: number) => (u < -0.52 && w < 0.38) || (u > 0.5 && w < 0.12);
 
 /**
- * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank. On a dark page the
- * skin glows and the dark features recede. On a light page it flips, like a pen drawing: hair, glasses
- * and beard are dense, and skin is a steady mid-tone halftone, so the face holds together as a shape
- * with its features standing out against it.
+ * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank.
+ * - Dark page: skin glows (dense), the dark hair and hoodie recede.
+ * - Light page: a pen drawing. Skin stays nearly bare, hair and hoodie are a medium tone, and only the
+ *   face's own lines (glasses, brows, eyes, nose, beard) go fully dark, so the features stand out.
  */
 function density(lum: number, light: boolean) {
-  if (lum < DARK_MAX) return light ? 0.92 - 0.1 * (lum / DARK_MAX) : 0.44 - 0.14 * (lum / DARK_MAX);
+  if (lum < DARK_MAX) return light ? 0.62 - 0.08 * (lum / DARK_MAX) : 0.44 - 0.14 * (lum / DARK_MAX);
   if (lum < BRIGHT_MIN) return 0;
   const t = clamp01((lum - BRIGHT_MIN) / 0.66);
-  return light ? 0.34 + 0.58 * (1 - t) : 0.26 + 0.52 * t;
+  return light ? 0.1 + 0.85 * Math.pow(1 - t, 0.55) : 0.26 + 0.52 * t;
 }
 
 /** Unsharp mask on the brightness grid, so thin features survive being squeezed into character cells. */
-function sharpen(lum: Float32Array, amount: number) {
+function sharpen(lum: Float32Array, cols: number, rows: number, amount: number) {
   const out = new Float32Array(lum.length);
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
       let sum = 0;
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
-          const rr = Math.min(ROWS - 1, Math.max(0, r + dr));
-          const cc = Math.min(COLS - 1, Math.max(0, c + dc));
-          sum += lum[rr * COLS + cc];
+          const rr = Math.min(rows - 1, Math.max(0, r + dr));
+          const cc = Math.min(cols - 1, Math.max(0, c + dc));
+          sum += lum[rr * cols + cc];
         }
       }
-      const v = lum[r * COLS + c];
-      out[r * COLS + c] = clamp01(v + amount * (v - sum / 9));
+      const v = lum[r * cols + c];
+      out[r * cols + c] = clamp01(v + amount * (v - sum / 9));
     }
   }
   return out;
@@ -84,26 +94,63 @@ function sharpen(lum: Float32Array, amount: number) {
 
 /** Samples the photo into a grid of characters, then optionally scatters each one for the intro. */
 function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean): Particle[] {
+  const { cols: COLS, rows: ROWS, font: FONT_PX } = light ? GRID.light : GRID.dark;
+  const STEP_X = W / COLS;
+  const STEP_Y = H / ROWS;
+
+  // Light: sample 2×2 pixels per cell and favour the darkest, so thin dark lines (glasses, brows)
+  // survive instead of being averaged into the skin. Dark: a plain average is what we want.
+  const SS = light ? 2 : 1;
   const sample = document.createElement("canvas");
-  sample.width = COLS;
-  sample.height = ROWS;
+  sample.width = COLS * SS;
+  sample.height = ROWS * SS;
   const sx = sample.getContext("2d", { willReadFrequently: true })!;
   sx.imageSmoothingQuality = "high";
-  sx.drawImage(img, 0, 0, COLS, ROWS);
-  const px = sx.getImageData(0, 0, COLS, ROWS).data;
+  sx.drawImage(
+    img,
+    CROP.x * img.naturalWidth,
+    CROP.y * img.naturalHeight,
+    CROP.size * img.naturalWidth,
+    CROP.size * img.naturalHeight,
+    0,
+    0,
+    sample.width,
+    sample.height,
+  );
+  const px = sx.getImageData(0, 0, sample.width, sample.height).data;
+  const lumAt = (x: number, y: number) => {
+    const i = (y * sample.width + x) * 4;
+    return (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
+  };
 
   // Pass 1: ink amount per cell.
   const bright = new Float32Array(COLS * ROWS);
-  for (let k = 0; k < bright.length; k++) {
-    bright[k] = (0.2126 * px[k * 4] + 0.7152 * px[k * 4 + 1] + 0.0722 * px[k * 4 + 2]) / 255;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (!light) {
+        bright[r * COLS + c] = lumAt(c, r);
+        continue;
+      }
+      let sum = 0;
+      let min = 1;
+      for (let dy = 0; dy < SS; dy++) {
+        for (let dx = 0; dx < SS; dx++) {
+          const l = lumAt(c * SS + dx, r * SS + dy);
+          sum += l;
+          min = Math.min(min, l);
+        }
+      }
+      bright[r * COLS + c] = 0.2 * (sum / (SS * SS)) + 0.8 * min;
+    }
   }
-  const lumGrid = light ? sharpen(bright, 1) : bright;
+  const lumGrid = light ? sharpen(bright, COLS, ROWS, 1) : bright;
   const ink = new Float32Array(COLS * ROWS);
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       // Outside the photo's circular frame, and over the backdrop art, there is nothing to draw.
-      const u = ((c + 0.5) / COLS) * 2 - 1;
-      const w = ((r + 0.5) / ROWS) * 2 - 1;
+      // (u, w) are positions in the whole photo, not the crop, so the masks above stay valid.
+      const u = (CROP.x + ((c + 0.5) / COLS) * CROP.size) * 2 - 1;
+      const w = (CROP.y + ((r + 0.5) / ROWS) * CROP.size) * 2 - 1;
       if (u * u + w * w > DISC * DISC || isBackdropArt(u, w)) continue;
       ink[r * COLS + c] = density(lumGrid[r * COLS + c], light);
     }
@@ -186,7 +233,7 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
 }
 
 /**
- * Your photo, drawn as ~4,000 text characters that assemble when the page opens and swirl away from
+ * Your photo, drawn as thousands of text characters that assemble when the page opens and swirl away from
  * the cursor. Colours come from the active theme's CSS variables, so every palette and mode gets its
  * own version. The loop sleeps whenever nothing is moving, and is skipped under reduced motion.
  */
@@ -237,7 +284,7 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      ctx.font = `${light ? 700 : 500} ${FONT_PX}px ${font}`;
+      ctx.font = `${light ? 700 : 500} ${(light ? GRID.light : GRID.dark).font}px ${font}`;
       ctx.textBaseline = "alphabetic";
       const tones = [colors.ink, colors.muted, colors.faint];
       let current = "";
