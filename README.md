@@ -3,7 +3,7 @@
 Personal portfolio of Rahul Narayanasamy, Software Engineer, Bengaluru.
 **Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules**, statically exported for GitHub Pages.
 
-The visual language comes from the original site: JetBrains Mono everywhere, warm black with one red,
+The visual language: JetBrains Mono everywhere, warm black with one red,
 film grain + scanlines + vignette, a terminal boot loader, and numbered pages with outlined indices.
 
 ## Run it
@@ -50,10 +50,18 @@ All copy lives in typed files under `content/`:
 
 - Boot loader runs once per browser session; any key or click skips it; off under reduced motion
 - Route changes play a red curtain naming the page you're entering
-- `[` / `]` previous / next page · `⌘K`, `Ctrl K` or `/` command menu · `T` toggles light / dark · `P` switches palette
-- Two palettes × two modes: **Mono** (black & white, the default) and **Ember** (red), each in dark and light. Tokens live in `app/globals.css`; the choice is remembered per browser
+- `[` / `]` previous / next page · `⌘K`, `Ctrl K` or `/` command menu · `T` toggles light / dark · `P` cycles palette
+- Three palettes × two modes: **Mono** (black & white, the default), **Ember** (red) and **Moss** (sage green on warm black / parchment), each in dark and light. `P` cycles palettes; ⌘K can pick one directly. Tokens live in `app/globals.css`; the choice is remembered per browser
 
 ## Deploy
 
 Push to `main` of the `rahul-narayanasamy.github.io` repo. `.github/workflows/deploy.yml` builds and
 publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** once.
+
+## Home portrait
+
+The hero portrait (`components/home/AsciiPortrait.tsx`) is generated in the browser from `public/avatar.png`:
+the photo is sampled into ~3,000 text characters that spiral in when the page opens and swirl away from the
+cursor. Colours come from the active theme's CSS variables, and light themes get a pen-drawing version
+(dense hair and glasses, bare skin) while dark themes get a glowing one. The animation loop sleeps when
+nothing is moving and is skipped under `prefers-reduced-motion`.

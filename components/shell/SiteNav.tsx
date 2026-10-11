@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { pages, pageFor } from "@/lib/pages";
 import { profile } from "@/content/profile";
-import { togglePalette, toggleTheme } from "@/lib/actions";
+import { cyclePalette, getPalette, PALETTES, setPalette, toggleTheme, type Palette } from "@/lib/actions";
 import { useSessionClock } from "@/lib/hooks";
 import { CommandMenu } from "./CommandMenu";
 import styles from "./SiteNav.module.css";
@@ -23,13 +23,12 @@ export function SiteNav() {
   const [hidden, setHidden] = useState(false);
   const [progress, setProgress] = useState(0);
   const moreRef = useRef<HTMLDivElement>(null);
-  const [look, setLook] = useState({ mono: false, light: false });
+  const [look, setLook] = useState<{ palette: Palette; light: boolean }>({ palette: "mono", light: false });
 
   // Mirror the palette and mode set on <html> (by the boot script, buttons, keys or ⌘K).
   useEffect(() => {
     const read = () => {
-      const d = document.documentElement.dataset;
-      setLook({ mono: d.palette === "mono", light: d.theme === "light" });
+      setLook({ palette: getPalette(), light: document.documentElement.dataset.theme === "light" });
     };
     read();
     window.addEventListener("themechange", read);
@@ -80,6 +79,7 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  const meta = PALETTES.find((p) => p.id === look.palette)!;
   const isActive = (href: string) => current?.href === href;
   const moreActive = more.some((p) => isActive(p.href));
 
@@ -136,12 +136,12 @@ export function SiteNav() {
             <button
               type="button"
               className={`${styles.icon} ${styles.paletteBtn}`}
-              onClick={togglePalette}
-              aria-label={`Palette: ${look.mono ? "Mono, black and white" : "Ember, red"}. Switch palette`}
-              title={`Palette · ${look.mono ? "Mono" : "Ember"} (P)`}
+              onClick={cyclePalette}
+              aria-label={`Palette: ${meta.label}, ${meta.note}. Switch palette`}
+              title={`Palette · ${meta.label} (P)`}
             >
-              <span className={`${styles.swatch} ${look.mono ? styles.swatchMono : ""}`} aria-hidden="true" />
-              <span className={styles.paletteName}>{look.mono ? "Mono" : "Ember"}</span>
+              <span className={`${styles.swatch} ${styles[`swatch_${look.palette}`]}`} aria-hidden="true" />
+              <span className={styles.paletteName}>{meta.label}</span>
             </button>
             <button
               type="button"
@@ -179,11 +179,15 @@ export function SiteNav() {
             ))}
           </ol>
           <div className={styles.overlayLook}>
-            <button type="button" onClick={togglePalette}>
-              <span className={`${styles.swatch} ${look.mono ? styles.swatchMono : ""}`} aria-hidden="true" />
-              Palette · {look.mono ? "Mono" : "Ember"}
-            </button>
-            <button type="button" onClick={toggleTheme}>
+            <div className={styles.paletteGroup} role="group" aria-label="Palette">
+              {PALETTES.map((p) => (
+                <button key={p.id} type="button" aria-pressed={look.palette === p.id} onClick={() => setPalette(p.id)}>
+                  <span className={`${styles.swatch} ${styles[`swatch_${p.id}`]}`} aria-hidden="true" />
+                  {p.label}
+                </button>
+              ))}
+            </div>
+            <button type="button" className={styles.modeBtn} onClick={toggleTheme}>
               {look.light ? "☾" : "☀"} Mode · {look.light ? "Light" : "Dark"}
             </button>
           </div>

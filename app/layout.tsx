@@ -55,10 +55,10 @@ const personJsonLd = {
 
 /**
  * Runs before first paint: marks JS as available, restores the saved theme and palette (Mono is the
- * default; only an explicit Ember choice removes it), and raises the boot
- * loader. Like the original site, every full page load gets the loader; in-app route changes don't.
+ * default, set in the HTML; Ember removes it, Moss replaces it), and raises the boot
+ * loader. Every full page load gets the loader; in-app route changes don't.
  */
-const bootScript = `(function(){var d=document.documentElement;d.classList.add('js','booting');try{var t=localStorage.getItem('theme');if(t)d.dataset.theme=t;if(localStorage.getItem('palette')==='ember')delete d.dataset.palette}catch(e){}})()`;
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js','booting');try{var t=localStorage.getItem('theme');if(t)d.dataset.theme=t;var p=localStorage.getItem('palette');if(p==='ember')delete d.dataset.palette;else if(p==='moss')d.dataset.palette='moss'}catch(e){}})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

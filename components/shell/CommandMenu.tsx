@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { pages } from "@/lib/pages";
 import { profile } from "@/content/profile";
-import { copyEmail, isTyping, togglePalette, toggleTheme } from "@/lib/actions";
+import { copyEmail, cyclePalette, isTyping, PALETTES, setPalette, toggleTheme } from "@/lib/actions";
 import styles from "./CommandMenu.module.css";
 
 type Command = { id: string; label: string; hint: string; group: "Pages" | "Actions" | "Links"; run: () => void };
@@ -28,7 +28,14 @@ export function CommandMenu({ open, onOpenChange }: { open: boolean; onOpenChang
       })),
       { id: "copy", label: "Copy email address", hint: "⌘C", group: "Actions", run: copyEmail },
       { id: "theme", label: "Toggle light / dark", hint: "T", group: "Actions", run: toggleTheme },
-      { id: "palette", label: "Switch palette: Ember (red) / Mono (B&W)", hint: "P", group: "Actions", run: togglePalette },
+      { id: "palette", label: "Next palette", hint: "P", group: "Actions", run: cyclePalette },
+      ...PALETTES.map((p) => ({
+        id: `palette-${p.id}`,
+        label: `Palette: ${p.label} (${p.note})`,
+        hint: "",
+        group: "Actions" as const,
+        run: () => setPalette(p.id),
+      })),
       {
         id: "trace",
         label: "Replay the agent trace",
@@ -81,7 +88,7 @@ export function CommandMenu({ open, onOpenChange }: { open: boolean; onOpenChang
       } else if (e.key.toLowerCase() === "t") {
         toggleTheme();
       } else if (e.key.toLowerCase() === "p") {
-        togglePalette();
+        cyclePalette();
       }
     };
     window.addEventListener("keydown", onKey);

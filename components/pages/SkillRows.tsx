@@ -4,7 +4,7 @@ import { useState } from "react";
 import { skills } from "@/content/skills";
 import styles from "./Skills.module.css";
 
-/** Rows flood red on hover (as on the original site); click or Enter expands where each skill is used. */
+/** Rows flood with the accent on hover; click or Enter expands where each skill is used. */
 export function SkillRows() {
   const [open, setOpen] = useState<number | null>(null);
   return (
