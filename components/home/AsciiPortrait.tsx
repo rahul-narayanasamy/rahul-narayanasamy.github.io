@@ -51,14 +51,35 @@ const isBackdropArt = (u: number, w: number) => (u < -0.52 && w < 0.38) || (u > 
 
 /**
  * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank. On a dark page the
- * skin glows and the dark features recede; on a light page it flips, like a pen drawing: hair, glasses
- * and beard are dense and bare skin is left almost empty.
+ * skin glows and the dark features recede. On a light page it flips, like a pen drawing: hair, glasses
+ * and beard are dense, and skin is a steady mid-tone halftone, so the face holds together as a shape
+ * with its features standing out against it.
  */
 function density(lum: number, light: boolean) {
   if (lum < DARK_MAX) return light ? 0.92 - 0.1 * (lum / DARK_MAX) : 0.44 - 0.14 * (lum / DARK_MAX);
   if (lum < BRIGHT_MIN) return 0;
   const t = clamp01((lum - BRIGHT_MIN) / 0.66);
-  return light ? 0.06 + 0.6 * Math.pow(1 - t, 1.4) : 0.26 + 0.52 * t;
+  return light ? 0.34 + 0.58 * (1 - t) : 0.26 + 0.52 * t;
+}
+
+/** Unsharp mask on the brightness grid, so thin features survive being squeezed into character cells. */
+function sharpen(lum: Float32Array, amount: number) {
+  const out = new Float32Array(lum.length);
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      let sum = 0;
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          const rr = Math.min(ROWS - 1, Math.max(0, r + dr));
+          const cc = Math.min(COLS - 1, Math.max(0, c + dc));
+          sum += lum[rr * COLS + cc];
+        }
+      }
+      const v = lum[r * COLS + c];
+      out[r * COLS + c] = clamp01(v + amount * (v - sum / 9));
+    }
+  }
+  return out;
 }
 
 /** Samples the photo into a grid of characters, then optionally scatters each one for the intro. */
@@ -72,15 +93,19 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
   const px = sx.getImageData(0, 0, COLS, ROWS).data;
 
   // Pass 1: ink amount per cell.
+  const bright = new Float32Array(COLS * ROWS);
+  for (let k = 0; k < bright.length; k++) {
+    bright[k] = (0.2126 * px[k * 4] + 0.7152 * px[k * 4 + 1] + 0.0722 * px[k * 4 + 2]) / 255;
+  }
+  const lumGrid = light ? sharpen(bright, 1) : bright;
   const ink = new Float32Array(COLS * ROWS);
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
-      // Outside the photo's circular frame there is nothing to draw.
+      // Outside the photo's circular frame, and over the backdrop art, there is nothing to draw.
       const u = ((c + 0.5) / COLS) * 2 - 1;
       const w = ((r + 0.5) / ROWS) * 2 - 1;
       if (u * u + w * w > DISC * DISC || isBackdropArt(u, w)) continue;
-      const i = (r * COLS + c) * 4;
-      ink[r * COLS + c] = density((0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255, light);
+      ink[r * COLS + c] = density(lumGrid[r * COLS + c], light);
     }
   }
 
@@ -129,7 +154,7 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
       const v = ink[r * COLS + c];
       if (label[r * COLS + c] !== best) continue;
       // Level 0 is empty space; 1..8 index the ramp. A little noise dithers the edges.
-      const level = Math.floor(v * (RAMP.length + 1) + (Math.random() - 0.5) * 0.4);
+      const level = Math.floor(v * (RAMP.length + 1) + (Math.random() - 0.5) * (light ? 0.25 : 0.4));
       if (level < 1) continue;
       const set = RAMP[Math.min(RAMP.length, level) - 1];
 
@@ -145,7 +170,8 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
         y = cy + Math.sin(ang) * rad;
       }
       out.push({
-        ch: set[Math.random() < 0.5 ? 0 : 1],
+        // Light pages get a regular checker of the two glyphs (a clean halftone); dark pages stay random.
+        ch: set[light ? (r + c) & 1 : Math.random() < 0.5 ? 0 : 1],
         x,
         y,
         bx,
@@ -211,7 +237,7 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      ctx.font = `500 ${FONT_PX}px ${font}`;
+      ctx.font = `${light ? 700 : 500} ${FONT_PX}px ${font}`;
       ctx.textBaseline = "alphabetic";
       const tones = [colors.ink, colors.muted, colors.faint];
       let current = "";
