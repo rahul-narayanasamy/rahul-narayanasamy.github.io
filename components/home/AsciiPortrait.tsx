@@ -19,14 +19,12 @@ type Particle = {
 const W = 480;
 const H = 480;
 
-/**
- * Character grid per mode. A light page is a pen drawing, which needs finer lines to keep the face
- * legible, so it gets a denser grid of smaller characters than the glowing dark version.
- */
-const GRID = {
-  dark: { cols: 120, rows: 80, font: 6.4 },
-  light: { cols: 144, rows: 96, font: 5.3 },
-} as const;
+// Character grid: 120 columns by 80 rows of 6.4px glyphs.
+const COLS = 120;
+const ROWS = 80;
+const STEP_X = W / COLS;
+const STEP_Y = H / ROWS;
+const FONT_PX = 6.4;
 
 // Characters per brightness level, light to dense. Two per level breaks up banding.
 const RAMP: string[][] = [
@@ -60,50 +58,20 @@ const DISC = 0.93;
 const isBackdropArt = (u: number, w: number) => (u < -0.52 && w < 0.38) || (u > 0.5 && w < 0.12);
 
 /**
- * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank.
- * - Dark page: skin glows (dense), the dark hair and hoodie recede.
- * - Light page: a pen drawing. Skin stays nearly bare, hair and hoodie are a medium tone, and only the
- *   face's own lines (glasses, brows, eyes, nose, beard) go fully dark, so the features stand out.
+ * How much ink a cell gets (0 = blank, 1 = densest). The backdrop is always blank. Skin glows (dense)
+ * and the dark hair and hoodie recede, which is what makes the face read as a lit portrait.
  */
-function density(lum: number, light: boolean) {
-  if (lum < DARK_MAX) return light ? 0.62 - 0.08 * (lum / DARK_MAX) : 0.44 - 0.14 * (lum / DARK_MAX);
+function density(lum: number) {
+  if (lum < DARK_MAX) return 0.44 - 0.14 * (lum / DARK_MAX);
   if (lum < BRIGHT_MIN) return 0;
-  const t = clamp01((lum - BRIGHT_MIN) / 0.66);
-  return light ? 0.1 + 0.85 * Math.pow(1 - t, 0.55) : 0.26 + 0.52 * t;
-}
-
-/** Unsharp mask on the brightness grid, so thin features survive being squeezed into character cells. */
-function sharpen(lum: Float32Array, cols: number, rows: number, amount: number) {
-  const out = new Float32Array(lum.length);
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      let sum = 0;
-      for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-          const rr = Math.min(rows - 1, Math.max(0, r + dr));
-          const cc = Math.min(cols - 1, Math.max(0, c + dc));
-          sum += lum[rr * cols + cc];
-        }
-      }
-      const v = lum[r * cols + c];
-      out[r * cols + c] = clamp01(v + amount * (v - sum / 9));
-    }
-  }
-  return out;
+  return 0.26 + 0.52 * clamp01((lum - BRIGHT_MIN) / 0.66);
 }
 
 /** Samples the photo into a grid of characters, then optionally scatters each one for the intro. */
-function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean): Particle[] {
-  const { cols: COLS, rows: ROWS, font: FONT_PX } = light ? GRID.light : GRID.dark;
-  const STEP_X = W / COLS;
-  const STEP_Y = H / ROWS;
-
-  // Light: sample 2×2 pixels per cell and favour the darkest, so thin dark lines (glasses, brows)
-  // survive instead of being averaged into the skin. Dark: a plain average is what we want.
-  const SS = light ? 2 : 1;
+function buildParticles(img: HTMLImageElement, scatter: boolean): Particle[] {
   const sample = document.createElement("canvas");
-  sample.width = COLS * SS;
-  sample.height = ROWS * SS;
+  sample.width = COLS;
+  sample.height = ROWS;
   const sx = sample.getContext("2d", { willReadFrequently: true })!;
   sx.imageSmoothingQuality = "high";
   sx.drawImage(
@@ -114,36 +82,12 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
     CROP.size * img.naturalHeight,
     0,
     0,
-    sample.width,
-    sample.height,
+    COLS,
+    ROWS,
   );
-  const px = sx.getImageData(0, 0, sample.width, sample.height).data;
-  const lumAt = (x: number, y: number) => {
-    const i = (y * sample.width + x) * 4;
-    return (0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255;
-  };
+  const px = sx.getImageData(0, 0, COLS, ROWS).data;
 
   // Pass 1: ink amount per cell.
-  const bright = new Float32Array(COLS * ROWS);
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (!light) {
-        bright[r * COLS + c] = lumAt(c, r);
-        continue;
-      }
-      let sum = 0;
-      let min = 1;
-      for (let dy = 0; dy < SS; dy++) {
-        for (let dx = 0; dx < SS; dx++) {
-          const l = lumAt(c * SS + dx, r * SS + dy);
-          sum += l;
-          min = Math.min(min, l);
-        }
-      }
-      bright[r * COLS + c] = 0.2 * (sum / (SS * SS)) + 0.8 * min;
-    }
-  }
-  const lumGrid = light ? sharpen(bright, COLS, ROWS, 1) : bright;
   const ink = new Float32Array(COLS * ROWS);
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
@@ -152,7 +96,8 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
       const u = (CROP.x + ((c + 0.5) / COLS) * CROP.size) * 2 - 1;
       const w = (CROP.y + ((r + 0.5) / ROWS) * CROP.size) * 2 - 1;
       if (u * u + w * w > DISC * DISC || isBackdropArt(u, w)) continue;
-      ink[r * COLS + c] = density(lumGrid[r * COLS + c], light);
+      const i = (r * COLS + c) * 4;
+      ink[r * COLS + c] = density((0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2]) / 255);
     }
   }
 
@@ -201,7 +146,7 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
       const v = ink[r * COLS + c];
       if (label[r * COLS + c] !== best) continue;
       // Level 0 is empty space; 1..8 index the ramp. A little noise dithers the edges.
-      const level = Math.floor(v * (RAMP.length + 1) + (Math.random() - 0.5) * (light ? 0.25 : 0.4));
+      const level = Math.floor(v * (RAMP.length + 1) + (Math.random() - 0.5) * 0.4);
       if (level < 1) continue;
       const set = RAMP[Math.min(RAMP.length, level) - 1];
 
@@ -217,8 +162,7 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
         y = cy + Math.sin(ang) * rad;
       }
       out.push({
-        // Light pages get a regular checker of the two glyphs (a clean halftone); dark pages stay random.
-        ch: set[light ? (r + c) & 1 : Math.random() < 0.5 ? 0 : 1],
+        ch: set[Math.random() < 0.5 ? 0 : 1],
         x,
         y,
         bx,
@@ -234,8 +178,9 @@ function buildParticles(img: HTMLImageElement, scatter: boolean, light: boolean)
 
 /**
  * Your photo, drawn as thousands of text characters that assemble when the page opens and swirl away from
- * the cursor. Colours come from the active theme's CSS variables, so every palette and mode gets its
- * own version. The loop sleeps whenever nothing is moving, and is skipped under reduced motion.
+ * the cursor. The characters glow, so they always sit on a dark ground (the page in dark themes, a dark
+ * panel in light ones, see the CSS module) and take their colours from the palette's --portrait-*
+ * variables. The loop sleeps whenever nothing is moving, and is skipped under reduced motion.
  */
 export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -257,18 +202,15 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
     let alive = true;
     let visible = true;
     let seenIntro = false;
-    let light = false;
     let image: HTMLImageElement | null = null;
     let sweepStart = -1;
     let sweepDone = false;
     let touched = false;
     const cursor = { x: -9999, y: -9999 };
 
-    /** Light and dark pages need different drawings, so a mode change re-forms the portrait. */
     const rebuild = (scatter: boolean) => {
       if (!image) return;
-      light = root.dataset.theme === "light";
-      parts = buildParticles(image, scatter, light);
+      parts = buildParticles(image, scatter);
       seenIntro = false;
       sweepDone = true;
     };
@@ -276,7 +218,14 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
     const readColors = () => {
       const cs = getComputedStyle(root);
       const v = (n: string) => cs.getPropertyValue(n).trim();
-      colors = { ink: v("--ink"), muted: v("--muted"), faint: v("--faint"), accent: v("--red") };
+      // The portrait always glows on a dark ground (the page itself in dark themes, a dark panel in
+      // light ones), so it reads from --portrait-* rather than the page's own text colours.
+      colors = {
+        ink: v("--portrait-ink"),
+        muted: v("--portrait-muted"),
+        faint: v("--portrait-faint"),
+        accent: v("--portrait-accent"),
+      };
       font = getComputedStyle(document.body).fontFamily || "monospace";
     };
 
@@ -284,7 +233,7 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      ctx.font = `${light ? 700 : 500} ${(light ? GRID.light : GRID.dark).font}px ${font}`;
+      ctx.font = `500 ${FONT_PX}px ${font}`;
       ctx.textBaseline = "alphabetic";
       const tones = [colors.ink, colors.muted, colors.faint];
       let current = "";
@@ -414,10 +363,9 @@ export function AsciiPortrait({ src, alt }: { src: string; alt: string }) {
       if (visible) wake();
     });
     io.observe(canvas);
-    // Theme, palette and the loader all flip attributes on <html>; recolour or restart on any of them.
+    // Palette and the loader flip attributes on <html>; recolour or restart on any of them.
     const mo = new MutationObserver(() => {
       readColors();
-      if (image && (root.dataset.theme === "light") !== light) rebuild(!reduce);
       draw();
       wake();
     });

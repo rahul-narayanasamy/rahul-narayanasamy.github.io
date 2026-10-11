@@ -25,6 +25,12 @@
   --grain: 0.055;
   --vignette: radial-gradient(#0000 52%, #0000006b 100%);
   --glow: #e8382a17;
+  /* Hero portrait: always drawn glowing on a dark ground, in every mode. Light themes inherit these. */
+  --portrait-bg: #0a0908;
+  --portrait-ink: #eae4d6;
+  --portrait-muted: #a39b8c;
+  --portrait-faint: #8a8271;
+  --portrait-accent: #e8382a;
 
   --font: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
@@ -89,6 +95,11 @@ html[data-palette="mono"] {
   --grain: 0.06;
   --vignette: radial-gradient(#0000 52%, #00000073 100%);
   --glow: #ffffff0d;
+  --portrait-bg: #0a0a0a;
+  --portrait-ink: #f2f2f2;
+  --portrait-muted: #a8a8a8;
+  --portrait-faint: #8c8c8c;
+  --portrait-accent: #ffffff;
 }
 html[data-palette="mono"][data-theme="light"] {
   /* Contrast on --bg: ink 17.8 · muted 8.6 · faint 6.0 */
@@ -140,6 +151,11 @@ html[data-palette="moss"] {
   --grain: 0.045;
   --vignette: radial-gradient(#0000 52%, #0000006b 100%);
   --glow: #8fc4931a;
+  --portrait-bg: #0d0e0f;
+  --portrait-ink: #d4be98;
+  --portrait-muted: #a39482;
+  --portrait-faint: #958876;
+  --portrait-accent: #8fc493;
 }
 html[data-palette="moss"][data-theme="light"] {
   /* Contrast on --bg: ink 12.2 · muted 6.5 · faint 6.3 · accent 6.0 */

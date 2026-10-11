@@ -61,7 +61,7 @@ publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** o
 ## Home portrait
 
 The hero portrait (`components/home/AsciiPortrait.tsx`) is generated in the browser from `public/avatar.png`:
-the photo is sampled into ~3,000 text characters that spiral in when the page opens and swirl away from the
-cursor. Colours come from the active theme's CSS variables, and light themes get a pen-drawing version
-(dense hair and glasses, bare skin) while dark themes get a glowing one. The animation loop sleeps when
-nothing is moving and is skipped under `prefers-reduced-motion`.
+the head and shoulders are sampled into ~3,000 text characters that spiral in when the page opens and swirl
+away from the cursor. The characters glow, so they are always drawn on a dark ground: the page itself in dark
+themes, a dark panel in light themes. Colours come from the `--portrait-*` variables in `app/globals.css`, one
+set per palette. The animation loop sleeps when nothing is moving and is skipped under `prefers-reduced-motion`.
