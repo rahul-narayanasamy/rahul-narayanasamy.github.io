@@ -61,7 +61,7 @@
 }
 .engagements summary {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr) 28px;
+  grid-template-columns: 150px minmax(0, 1fr) 28px;
   align-items: center;
   gap: 14px;
   padding: 16px 4px;
@@ -103,7 +103,7 @@ details[open] .eToggle {
 .notes {
   display: grid;
   gap: 8px;
-  padding: 0 4px 20px 138px;
+  padding: 0 4px 16px 168px;
   color: var(--muted);
   font-size: 13px;
   animation: notes-in 0.45s var(--ease);
@@ -117,6 +117,9 @@ details[open] .eToggle {
   position: absolute;
   left: 0;
   color: var(--red);
+}
+.eStack {
+  padding: 0 4px 22px 168px;
 }
 @keyframes notes-in {
   from {
@@ -158,6 +161,9 @@ details[open] .eToggle {
     grid-row: 1 / span 2;
   }
   .notes {
+    padding-left: 4px;
+  }
+  .eStack {
     padding-left: 4px;
   }
   .edu {

@@ -69,6 +69,8 @@ export const toolbox = [
   "CodeMirror",
   "Streamlit",
   "Clerk",
+  "Jest",
+  "React Testing Library",
   "Playwright",
   "GitHub Actions",
   "Figma",
@@ -79,6 +81,7 @@ export const toolbox = [
   "Claude · MCP",
   "Cursor",
   "Postman",
+  "Sonar",
 ] as const;
 
 /** Glyphs for the scrolling tech ticker on the home page. */

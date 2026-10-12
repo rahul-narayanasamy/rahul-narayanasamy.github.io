@@ -52,8 +52,16 @@ export default function Resume() {
               <dd>React · TypeScript · Next.js · Node.js</dd>
             </div>
             <div>
+              <dt>Testing</dt>
+              <dd>Jest · React Testing Library</dd>
+            </div>
+            <div>
               <dt>Now</dt>
               <dd>AI agents · MCP · system design</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd>English · Tamil</dd>
             </div>
           </dl>
         </aside>

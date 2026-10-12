@@ -65,6 +65,15 @@ export default function Experience() {
                           <li key={n}>{n}</li>
                         ))}
                       </ul>
+                      {e.stack && (
+                        <ul className={`chips ${styles.eStack}`} aria-label="Stack">
+                          {e.stack.map((t) => (
+                            <li key={t} className="chip">
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </details>
                   </li>
                 ))}

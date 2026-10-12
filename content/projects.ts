@@ -96,10 +96,10 @@ export const caseStudies: CaseStudy[] = [
     id: "schema-engine",
     title: "Schema-driven transaction engine",
     domain: "Insurance technology platform",
-    period: "2025 – now",
+    period: "Feb 2025 – Aug 2026",
     role: "Feature owner · rollout · production support",
     summary:
-      "A configurable workflow layer that lets new business processes be onboarded as JSON Schema rather than hand-built screens.",
+      "A real-time transaction and case-management application whose workflows are configurable: new business processes are onboarded as JSON Schema rather than hand-built screens.",
     problem:
       "Every new business process needed its own transaction screens, validations and rollout, and the rules changed often.",
     approach: [
@@ -122,7 +122,7 @@ export const caseStudies: CaseStudy[] = [
     id: "cms-migration",
     title: "CMS → AEM component migration",
     domain: "Global financial-data provider",
-    period: "2024 – 2025",
+    period: "Jun 2024 – Jan 2025",
     role: "UI component engineer",
     summary:
       "Reusable React components integrated into Adobe Experience Manager, moving two separate CMS platforms onto one.",
@@ -145,16 +145,16 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "trade-automation",
-    title: "Trade automation interface",
-    domain: "Global logistics company",
-    period: "2022 – 2024",
+    title: "Trade compliance portal",
+    domain: "Global trade compliance platform",
+    period: "Aug 2022 – Apr 2024",
     role: "Frontend engineer",
     summary:
-      "Reusable UI for a global trade-automation service, built against API contracts agreed with BFF and backend teams before the screens existed.",
+      "Reusable UI for tariff code search, trade lane comparison and a product catalog, built against API contracts agreed with BFF and backend teams before the screens existed.",
     problem:
       "A complex trade domain, several teams, and a quality bar measured by coverage, Sonar and Sigrid scores.",
     approach: [
-      "Shared component set for trade-automation screens.",
+      "Shared component set for search, comparison and catalog screens, with real-time validation.",
       "API contracts defined with BFF and backend teams up front.",
       "Unit tests shipped with every feature.",
     ],
@@ -171,7 +171,7 @@ export const caseStudies: CaseStudy[] = [
     id: "datagrid",
     title: "Enterprise DataGrid",
     domain: "Syncfusion UI component library",
-    period: "2018 – 2022",
+    period: "Apr 2018 – May 2022",
     role: "Senior software engineer",
     summary:
       "The DataGrid, DataManager and Pager web components in a commercial UI library used by developers building data-heavy applications.",
