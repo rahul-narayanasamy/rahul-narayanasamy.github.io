@@ -5,7 +5,7 @@ import styles from "./Loader.module.css";
 
 const LOG_LINES = ["> Portfolio / Rahul Narayanasamy", "> Loading assets ................ OK", "> Almost ready"];
 
-// Timings match the original site's loader.
+// Boot sequence timings.
 const START_MS = 200;
 const PER_CHAR_MS = 16;
 const LINE_PAUSE_MS = 130;
@@ -15,7 +15,7 @@ const LIFT_MS = 1000;
 
 const TYPE_END = LOG_LINES.reduce((t, l) => t + l.length * PER_CHAR_MS + LINE_PAUSE_MS, START_MS);
 
-/** power2.inOut, as the original GSAP tween. */
+/** power2.inOut easing. */
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
 /** How many characters of each line are visible after `ms` of typing. */
@@ -32,7 +32,7 @@ function typedAt(ms: number) {
  * Terminal boot screen: lines type in, the counter runs to 100%, then the whole screen lifts away.
  * Shown on every full page load (an inline script adds `html.booting` before first paint).
  * Any key or tap fast-forwards it; the counter waits at 99% until the webfont is ready.
- * With reduced motion, lines appear at once and the counter runs in 0.6s, as on the original.
+ * With reduced motion, lines appear at once and the counter runs in 0.6s.
  */
 export function Loader() {
   const [typed, setTyped] = useState(() => LOG_LINES.map(() => 0));

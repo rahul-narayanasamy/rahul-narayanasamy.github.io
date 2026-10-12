@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { milestones, profile } from "@/content/profile";
 import { useLocalTime, useWeather, useYearProgress } from "@/lib/hooks";
+import { AsciiPortrait } from "./AsciiPortrait";
 import styles from "./Hero.module.css";
 
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/_#";
@@ -84,27 +84,14 @@ export function Hero() {
       </p>
 
       <div className={styles.identity}>
-        <div className={`${styles.avatar} ${styles.anim}`} style={{ "--d": "80ms" } as React.CSSProperties}>
-          <svg className={styles.hud} viewBox="0 0 120 120" aria-hidden="true">
-            <circle cx="60" cy="60" r="57" className={styles.hudRing} />
-            <circle cx="60" cy="60" r="57" className={styles.hudArc} />
-            {Array.from({ length: 24 }, (_, i) => (
-              <line
-                key={i}
-                x1="60"
-                y1="1"
-                x2="60"
-                y2={i % 6 === 0 ? 6 : 3.5}
-                transform={`rotate(${i * 15} 60 60)`}
-                className={styles.tick}
-              />
-            ))}
-          </svg>
-          <Image src="/avatar.png" alt={`Portrait of ${profile.name}`} width={256} height={256} priority />
-          <span className={styles.online} title="Available">
-            <span className="status-dot" />
-          </span>
-        </div>
+        <figure className={`${styles.portrait} ${styles.anim}`} style={{ "--d": "80ms" } as React.CSSProperties}>
+          <AsciiPortrait src="/portrait.png" alt={`Portrait of ${profile.name}, drawn in text characters`} />
+          <figcaption>
+            <span className="status-dot" aria-hidden="true" />
+            <span className={styles.hintHover}>Move over it</span>
+            <span className={styles.hintTouch}>Drag across it</span>
+          </figcaption>
+        </figure>
 
         <h1 id="hero-name" className={styles.name} aria-label={profile.name}>
           <span className={`${styles.solid} ${styles.anim}`} style={{ "--d": "120ms" } as React.CSSProperties} aria-hidden="true">

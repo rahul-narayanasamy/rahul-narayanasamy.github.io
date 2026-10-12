@@ -3,7 +3,7 @@
 Personal portfolio of Rahul Narayanasamy, Software Engineer, Bengaluru.
 **Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules**, statically exported for GitHub Pages.
 
-The visual language comes from the original site: JetBrains Mono everywhere, warm black with one red,
+The visual language: JetBrains Mono everywhere, warm black with one red,
 film grain + scanlines + vignette, a terminal boot loader, and numbered pages with outlined indices.
 
 ## Run it
@@ -50,10 +50,22 @@ All copy lives in typed files under `content/`:
 
 - Boot loader runs once per browser session; any key or click skips it; off under reduced motion
 - Route changes play a red curtain naming the page you're entering
-- `[` / `]` previous / next page · `⌘K`, `Ctrl K` or `/` command menu · `T` toggles light / dark · `P` switches palette
-- Two palettes × two modes: **Mono** (black & white, the default) and **Ember** (red), each in dark and light. Tokens live in `app/globals.css`; the choice is remembered per browser
+- `[` / `]` previous / next page · `⌘K`, `Ctrl K` or `/` command menu · `T` toggles light / dark · `P` cycles palette
+- Three palettes × two modes: **Mono** (black & white, the default), **Ember** (red) and **Moss** (sage green on warm black / parchment), each in dark and light. `P` cycles palettes; ⌘K can pick one directly. Tokens live in `app/globals.css`; the choice is remembered per browser
 
 ## Deploy
 
 Push to `main` of the `rahul-narayanasamy.github.io` repo. `.github/workflows/deploy.yml` builds and
 publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** once.
+
+## Home portrait
+
+The hero portrait (`components/home/AsciiPortrait.tsx`), shown beside the name, is drawn in the browser from `public/portrait.png`, a
+head-and-shoulders cut-out of the avatar with a transparent background. It is sampled into ~3,500 text
+characters that spiral in when the page opens and swirl away from the cursor. The characters glow, so they are
+always drawn on a dark ground: the page itself in dark themes, a dark panel in light themes. Colours come from
+the `--portrait-*` variables in `app/globals.css`, one set per palette. The animation loop sleeps when nothing is
+moving and is skipped under `prefers-reduced-motion`.
+
+`public/avatar.png` (512px) is the photo used on the About page and as the social preview image; the favicon files
+in `app/` are cropped from the same photo.
