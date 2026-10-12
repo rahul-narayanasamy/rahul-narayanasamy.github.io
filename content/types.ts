@@ -34,7 +34,7 @@ export type Role = {
   current?: boolean;
   summary: string;
   stack: string[];
-  engagements: { period: string; context: string; notes: string[] }[];
+  engagements: { period: string; context: string; notes: string[]; stack?: string[] }[];
 };
 
 export type Skill = {
