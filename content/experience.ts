@@ -1,5 +1,6 @@
 import type { Role } from "./types";
 
+// Mirrors the resume at /resume.pdf. Client names are intentionally left out.
 export const roles: Role[] = [
   {
     period: "May 2022 — Present",
@@ -9,35 +10,38 @@ export const roles: Role[] = [
     current: true,
     summary:
       "Frontend architecture, TypeScript-heavy React surfaces, and polish that survives design review and production traffic.",
-    stack: ["React", "TypeScript", "Next.js", "GraphQL", "Node.js"],
+    stack: ["React", "TypeScript", "Next.js", "Redux", "TanStack Query"],
     engagements: [
       {
-        period: "2025 – now",
+        period: "Feb 2025 – Aug 2026",
         context: "Insurance technology platform",
         notes: [
-          "Lead onboarding of new business processes and transaction flows, from requirement analysis to production rollout.",
-          "Build schema-based workflows with configurable transaction screens and business-rule validation using RJSF.",
-          "Own production support: incident resolution, UAT validation and client-specific tickets.",
-          "Mentor new engineers on workflow and coding standards; run code reviews.",
+          "Built a real-time web application for transaction processing, live event tracking, and case management.",
+          "Developed dynamic, schema-based workflows with configurable transaction screens and business-rule validations using RJSF.",
+          "Managed onboarding of new business processes and transaction flows, from requirement analysis through production rollout.",
+          "Led production support, including incident resolution, UAT validation, and client-specific ticket handling.",
+          "Mentored new team members on development workflows and coding standards; ran frontend code reviews focused on performance, security, and maintainability.",
         ],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "CSS Modules", "Redux", "Context API", "TanStack Query", "Vercel"],
       },
       {
-        period: "2024 – 2025",
-        context: "Global financial-data provider",
+        period: "Jun 2024 – Jan 2025",
+        context: "Content platform migration",
         notes: [
-          "Designed and built UI components supporting the migration of two CMS platforms to Adobe Experience Manager.",
-          "Integrated reusable React components with AEM alongside backend developers; responsive and cross-browser.",
-          "Found and fixed complex component bugs during integration.",
+          "Designed and built reusable React components integrated with Adobe Experience Manager (AEM) during a two-platform CMS migration.",
+          "Ensured components were responsive and compatible across devices and browsers; resolved integration issues in collaboration with AEM developers.",
         ],
+        stack: ["React", "TypeScript", "Handlebars.js", "Tailwind CSS", "HTML", "CSS"],
       },
       {
-        period: "2022 – 2024",
-        context: "Global logistics · trade automation",
+        period: "Aug 2022 – Apr 2024",
+        context: "Global trade compliance portal",
         notes: [
-          "Built reusable UI components for a global trade-automation service.",
-          "Defined API contracts with BFF and backend teams; worked with BAs and UX on new features.",
-          "Held unit-test coverage at 85% or higher and reduced Sonar code smells to improve the Sigrid score.",
+          "Built reusable UI components and features for tariff code search, trade lane comparison, and product catalog, including real-time validations.",
+          "Worked with business analysts, UX, BFF, and backend teams to define feature behaviour, resolve edge cases, and agree on API contracts.",
+          "Wrote unit tests achieving 85%+ code coverage; maintained code quality against Sonar and Sigrid standards.",
         ],
+        stack: ["TypeScript", "React", "Redux Toolkit", "Material UI", "React Testing Library", "REST APIs", "Axios", "Jenkins"],
       },
     ],
   },
@@ -45,19 +49,33 @@ export const roles: Role[] = [
     period: "Apr 2018 — May 2022",
     place: "Chennai",
     org: "Syncfusion",
-    title: "Software Engineer",
+    title: "Senior Software Engineer",
     summary:
       "Four years inside a UI component platform used by thousands of teams — data grids, templates, editing models, and the unglamorous work that teaches you how interfaces actually behave at scale.",
-    stack: ["JavaScript", "TypeScript", "Blazor", "C#", "EJ2"],
+    stack: ["JavaScript", "TypeScript", "React", "Node.js", "Git", "GitLab", "Jira"],
     engagements: [
       {
-        period: "2018 – 2022",
-        context: "DataGrid · DataManager · Pager",
+        period: "Apr 2018 – May 2022",
+        context: "DataGrid component · team of 30",
         notes: [
-          "Developed and maintained the DataGrid, DataManager and Pager web components.",
-          "Shipped customer-requested Grid features while keeping releases stable.",
-          "Diagnosed and fixed customer-reported bugs; ran support tickets and calls.",
-          "Mentored junior engineers on component internals.",
+          "Developed and maintained a feature-rich data-table component with data binding, editing, Excel-style filtering, custom sorting, row aggregation, selection, and Excel/CSV/PDF export.",
+          "Built client-requested features and fixed client-reported and internal bugs to keep releases stable.",
+          "Documented Grid features and guided junior engineers on using them to complete their work on time.",
+        ],
+      },
+      {
+        period: "Apr 2018 – May 2022",
+        context: "DataManager library · team of 30",
+        notes: [
+          "Developed and maintained the data-management package that binds data to components such as Grid, TreeGrid, and Dropdown List and performs data operations in client applications.",
+          "Fixed client-reported and internal bugs and documented the library's features.",
+        ],
+      },
+      {
+        period: "Apr 2018 – May 2022",
+        context: "Pager component · team of 10",
+        notes: [
+          "Maintained the stability of the paging component used alongside Grid and TreeGrid by fixing client-reported and internal issues.",
         ],
       },
     ],
@@ -68,5 +86,5 @@ export const education = {
   title: "Computer Science & Engineering",
   school: "TKS College of Technology · Theni",
   degree: "Bachelor of Engineering",
-  period: "2013 — 2017",
+  period: "Aug 2013 — Apr 2017",
 };
