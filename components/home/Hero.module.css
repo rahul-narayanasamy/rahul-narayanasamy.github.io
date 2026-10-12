@@ -60,7 +60,39 @@
 }
 
 .identity {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 36px);
   margin-top: 22px;
+}
+
+/* The animated portrait, in the old photo's place but bigger. It is a square canvas. */
+.portrait {
+  flex-shrink: 0;
+  width: clamp(140px, 16vw, 230px);
+  display: grid;
+  gap: 8px;
+}
+.portrait figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hintTouch {
+  display: none;
+}
+@media (hover: none) {
+  .hintHover {
+    display: none;
+  }
+  .hintTouch {
+    display: inline;
+  }
 }
 
 .name {
@@ -83,17 +115,12 @@
 
 .lower {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
-  grid-template-areas:
-    "left portrait"
-    "stats portrait";
-  column-gap: clamp(32px, 5vw, 72px);
-  row-gap: 36px;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
+  gap: 40px;
   margin-top: clamp(28px, 5vh, 56px);
 }
 .left {
-  grid-area: left;
   max-width: 620px;
 }
 .intro {
@@ -135,52 +162,16 @@
   transition: transform 1.4s var(--ease) 0.6s;
 }
 
-.portrait {
-  grid-area: portrait;
-  align-self: center;
-  display: grid;
-  gap: 14px;
-}
-.portrait figcaption {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.portrait figcaption > span:first-child {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.hintTouch {
-  display: none;
-}
-@media (hover: none) {
-  .hintHover {
-    display: none;
-  }
-  .hintTouch {
-    display: inline;
-  }
-}
-
 .milestones {
-  grid-area: stats;
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
-  gap: clamp(20px, 3vw, 44px);
+  gap: 12px;
 }
 .milestones li {
   display: grid;
-  padding-left: 14px;
-  border-left: 2px solid var(--line-strong);
+  justify-items: end;
+  padding-right: 14px;
+  border-right: 2px solid var(--line-strong);
+  text-align: right;
   transition: border-color 0.3s ease;
 }
 .milestones li:hover {
@@ -191,7 +182,6 @@
   font-weight: 700;
 }
 .milestones span {
-  max-width: 18ch;
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -221,30 +211,35 @@
 @media (max-width: 860px) {
   .lower {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "portrait"
-      "left"
-      "stats";
-    row-gap: 32px;
-  }
-  .portrait {
-    width: min(100%, 360px);
   }
   .milestones {
     grid-template-columns: repeat(3, 1fr);
   }
+  .milestones li {
+    justify-items: start;
+    text-align: left;
+    border-right: 0;
+    border-left: 2px solid var(--line-strong);
+    padding: 0 0 0 12px;
+  }
 }
-@media (max-width: 560px) {
+/* Narrow screens: the portrait goes above the name instead of beside it. */
+@media (max-width: 640px) {
   .topline .status {
     display: none;
+  }
+  .identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .portrait {
+    width: min(100%, 220px);
   }
   .outline {
     -webkit-text-stroke-width: 1.2px;
   }
   .name {
-    font-size: clamp(30px, 9.4vw, 60px);
-  }
-  .portrait {
-    width: 100%;
+    font-size: clamp(32px, 10.6vw, 66px);
   }
 }

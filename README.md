@@ -60,7 +60,7 @@ publishes `./out`. Set **Settings → Pages → Source** to **GitHub Actions** o
 
 ## Home portrait
 
-The hero portrait (`components/home/AsciiPortrait.tsx`) is drawn in the browser from `public/portrait.png`, a
+The hero portrait (`components/home/AsciiPortrait.tsx`), shown beside the name, is drawn in the browser from `public/portrait.png`, a
 head-and-shoulders cut-out of the avatar with a transparent background. It is sampled into ~3,500 text
 characters that spiral in when the page opens and swirl away from the cursor. The characters glow, so they are
 always drawn on a dark ground: the page itself in dark themes, a dark panel in light themes. Colours come from

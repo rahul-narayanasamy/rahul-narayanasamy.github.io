@@ -83,15 +83,26 @@ export function Hero() {
         {profile.role} — Portfolio
       </p>
 
-      <h1 id="hero-name" className={`${styles.name} ${styles.identity}`} aria-label={profile.name}>
-        <span className={`${styles.solid} ${styles.anim}`} style={{ "--d": "120ms" } as React.CSSProperties} aria-hidden="true">
-          {first}
-        </span>
-        <span className={`${styles.outline} ${styles.anim}`} style={{ "--d": "200ms" } as React.CSSProperties} aria-hidden="true">
-          {last}
-          <span className="type-cursor">_</span>
-        </span>
-      </h1>
+      <div className={styles.identity}>
+        <figure className={`${styles.portrait} ${styles.anim}`} style={{ "--d": "80ms" } as React.CSSProperties}>
+          <AsciiPortrait src="/portrait.png" alt={`Portrait of ${profile.name}, drawn in text characters`} />
+          <figcaption>
+            <span className="status-dot" aria-hidden="true" />
+            <span className={styles.hintHover}>Move over it</span>
+            <span className={styles.hintTouch}>Drag across it</span>
+          </figcaption>
+        </figure>
+
+        <h1 id="hero-name" className={styles.name} aria-label={profile.name}>
+          <span className={`${styles.solid} ${styles.anim}`} style={{ "--d": "120ms" } as React.CSSProperties} aria-hidden="true">
+            {first}
+          </span>
+          <span className={`${styles.outline} ${styles.anim}`} style={{ "--d": "200ms" } as React.CSSProperties} aria-hidden="true">
+            {last}
+            <span className="type-cursor">_</span>
+          </span>
+        </h1>
+      </div>
 
       <div className={styles.lower}>
         <div className={styles.left}>
@@ -119,19 +130,6 @@ export function Hero() {
             </div>
           </div>
         </div>
-
-        <figure className={`${styles.portrait} ${styles.anim}`} style={{ "--d": "260ms" } as React.CSSProperties}>
-          <AsciiPortrait src="/portrait.png" alt={`Portrait of ${profile.name}, drawn in text characters`} />
-          <figcaption>
-            <span>
-              <span className="status-dot" /> {profile.availability}
-            </span>
-            <span className={styles.hint}>
-              <span className={styles.hintHover}>Move over it</span>
-              <span className={styles.hintTouch}>Drag across it</span>
-            </span>
-          </figcaption>
-        </figure>
 
         <ol className={styles.milestones}>
           {milestones.map((m, i) => (
